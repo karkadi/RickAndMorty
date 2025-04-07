@@ -5,24 +5,23 @@
 //  Created by Arkadiy KAZAZYAN on 06/04/2025.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct CharacterPreviewView: View {
     let store: StoreOf<CharacterPreviewFeature>
 
-    init(user: ResultModelEntity) {
-        self.store = Store(initialState: CharacterPreviewFeature.State(user: user),
-                           reducer: { CharacterPreviewFeature() })
+    init(character: ResultModelEntity) {
+        self.store = Store(initialState: CharacterPreviewFeature.State(character: character)) { CharacterPreviewFeature() }
     }
 
     var body: some View {
         NavigationLink {
-            CharacterDetailsView(user: store.user)
+            CharacterDetailsView(character: store.character)
         } label: {
             VStack(spacing: 8) {
                 ZStack(alignment: .bottomTrailing) {
-                    AsyncImage(url: URL(string: store.user.image)) { image in
+                    AsyncImage(url: URL(string: store.character.image)) { image in
                         image
                             .resizable()
                             .scaledToFill()
@@ -42,7 +41,7 @@ struct CharacterPreviewView: View {
                 }
                 .frame(width: 100, height: 100)
 
-                Text(store.user.name)
+                Text(store.character.name)
                     .font(.caption)
                     .foregroundColor(.primary)
                     .lineLimit(1)
@@ -55,8 +54,8 @@ struct CharacterPreviewView: View {
 }
 
 #Preview {
-    guard let user = MockRickAndMortyService.mockedCharacters?.results.first?.toEntity() else {
+    guard let character = MockRickAndMortyService.mockedCharacters?.results.first?.toEntity() else {
         return Text("No data available")
     }
-    return CharacterPreviewView(user: user)
+    return CharacterPreviewView(character: character)
 }

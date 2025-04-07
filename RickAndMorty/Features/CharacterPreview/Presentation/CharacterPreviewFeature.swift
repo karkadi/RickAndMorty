@@ -15,27 +15,27 @@ struct CharacterPreviewFeature {
     // MARK: - State
     @ObservableState
     struct State: Equatable {
-        let user: ResultModelEntity
+        let character: ResultModelEntity
         var isSeen: Bool = false
         var isLiked: Bool = false
     }
-    
+
     // MARK: - Action
     enum Action {
         case onAppear
         case characterStateLoaded(CharacterPreviewEntity?)
     }
-    
+
     // MARK: - Reducer
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .run { [characterId = state.user.id] send in
+                return .run { [characterId = state.character.id] send in
                     let characterState = await useCase.fetchCharacterState(for: characterId)
                     await send(.characterStateLoaded(characterState))
                 }
-                
+
             case .characterStateLoaded(let characterState):
                 state.isSeen = characterState?.isSeen ?? false
                 state.isLiked = characterState?.isLiked ?? false

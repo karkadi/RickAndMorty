@@ -5,46 +5,47 @@
 //  Created by Arkadiy KAZAZYAN on 06/04/2025.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct CharacterDetailsView: View {
     @Environment(\.dismiss) var dismiss
 
     let store: StoreOf<CharacterDetailsFeature>
 
-    init(user: ResultModelEntity) {
-        self.store = Store(initialState: CharacterDetailsFeature.State(user: user),
-                           reducer: { CharacterDetailsFeature() })
+    init(character: ResultModelEntity) {
+        self.store = Store(initialState: CharacterDetailsFeature.State(character: character)) { CharacterDetailsFeature() }
     }
 
     var body: some View {
-        VStack(alignment: .center, spacing: 8) {
-            Spacer()
-            AsyncImage(url: URL(string: store.user.image),
-                       scale: 1,
-                       transaction: Transaction(animation: .spring(
-                        response: 0.5,
-                        dampingFraction: 0.65,
-                        blendDuration: 0.025))
-            ) { phase in
-                if let image = phase.image {
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 300, height: 300)
-                        .clipShape(RoundedRectangle(cornerRadius: 10.0 ))
-                        .transition(.scale)
-                } else {
-                    ProgressView()
+        ScrollView {
+            VStack(alignment: .center, spacing: 8) {
+                Spacer()
+                AsyncImage(url: URL(string: store.character.image),
+                           scale: 1,
+                           transaction: Transaction(animation: .spring(
+                            response: 0.5,
+                            dampingFraction: 0.65,
+                            blendDuration: 0.025))
+                ) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 300, height: 300)
+                            .clipShape(RoundedRectangle(cornerRadius: 10.0 ))
+                            .transition(.scale)
+                    } else {
+                        ProgressView()
+                    }
                 }
+                centeredText(title: "Status : ", text: store.character.status)
+                centeredText(title: "Species : ", text: store.character.species)
+                centeredText(title: "Type : ", text: store.character.type)
+                centeredText(title: "Gender : ", text: store.character.gender)
+                centeredText(title: "Created : ", text: store.character.created)
+                Spacer()
             }
-            CenteredText(title: "Status : ", text: store.user.status)
-            CenteredText(title: "Species : ", text: store.user.species)
-            CenteredText(title: "Type : ", text: store.user.type)
-            CenteredText(title: "Gender : ", text: store.user.gender)
-            CenteredText(title: "Created : ", text:  store.user.created)
-            Spacer()
         }
         .onAppear {
             store.send(.onAppear)
@@ -60,7 +61,7 @@ struct CharacterDetailsView: View {
                 })
             }
             ToolbarItem(placement: .principal) {
-                Text(store.user.name)
+                Text(store.character.name)
                     .foregroundColor(.white)
                     .font(.headline)
             }
@@ -78,7 +79,7 @@ struct CharacterDetailsView: View {
         .navigationBarBackButtonHidden(true)
     }
 
-    private func CenteredText(title: String, text: String) -> some View {
+    private func centeredText(title: String, text: String) -> some View {
         HStack(alignment: .center, spacing: 0.0 ) {
             Text(title)
                 .frame(maxWidth: .infinity, alignment: .trailing)
@@ -91,10 +92,10 @@ struct CharacterDetailsView: View {
 }
 
 #Preview {
-    guard let user = MockRickAndMortyService.mockedCharacters?.results.first?.toEntity() else {
+    guard let character = MockRickAndMortyService.mockedCharacters?.results.first?.toEntity() else {
         return Text("No data available")
     }
     return NavigationView {
-        CharacterDetailsView(user: user)
+        CharacterDetailsView(character: character)
     }
 }

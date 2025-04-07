@@ -12,7 +12,7 @@ struct InfoDTO: Codable {
     let count, pages: Int
     let next: String?
     let prev: String?
-    
+
     enum CodingKeys: CodingKey {
         case count
         case pages

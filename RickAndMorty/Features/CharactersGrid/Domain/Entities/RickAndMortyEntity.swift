@@ -13,6 +13,6 @@ struct RickAndMortyEntity: Equatable {
 extension RickAndMortyDTO {
     func toEntity() -> RickAndMortyEntity {
         RickAndMortyEntity(info: info.toEntity(),
-                           results: results.map{ $0.toEntity() } )
+                           results: results.map { $0.toEntity() })
     }
 }

@@ -26,7 +26,6 @@ enum CharacterPreviewUseCaseKey: DependencyKey {
 
 // MARK: - Dependency Registration
 extension DependencyValues {
-
     var repositoryCharacterPreview: any CharacterPreviewRepository {
         get { self[CharacterPreviewRepositoryKey.self] }
         set { self[CharacterPreviewRepositoryKey.self] = newValue }

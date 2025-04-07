@@ -1,0 +1,5 @@
+*.xcworkspacedata
+*.xcbkptlist
+*.plist
+InstagramLikeApp.xcscheme
+Package.resolved

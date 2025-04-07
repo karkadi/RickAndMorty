@@ -7,8 +7,8 @@
 
 protocol CharacterDetailsUseCase {
     func fetchCharacterState(for characterId: Int) async -> CharacterDetailsEntity?
-    func markStoryAsSeen(userId: Int, currentStory: CharacterDetailsEntity?) async
-    func toggleStoryLike(userId: Int, currentStory: CharacterDetailsEntity?) async
+    func markStoryAsSeen(characterId: Int, currentStory: CharacterDetailsEntity?) async
+    func toggleStoryLike(characterId: Int, currentStory: CharacterDetailsEntity?) async
 }
 
 class DefaultCharacterDetailsUseCase: CharacterDetailsUseCase {
@@ -22,24 +22,24 @@ class DefaultCharacterDetailsUseCase: CharacterDetailsUseCase {
         await repository.fetchCharacterState(characterId: characterId)
     }
 
-    func markStoryAsSeen(userId: Int, currentStory: CharacterDetailsEntity?) async {
+    func markStoryAsSeen(characterId: Int, currentStory: CharacterDetailsEntity?) async {
         if let story = currentStory {
             var updatedStory = story
             updatedStory.isSeen = true
             await repository.updateStory(updatedStory)
         } else {
-            let newStory = CharacterDetailsEntity(id: userId, isSeen: true, isLiked: false)
+            let newStory = CharacterDetailsEntity(id: characterId, isSeen: true, isLiked: false)
             await repository.updateStory(newStory)
         }
     }
 
-    func toggleStoryLike(userId: Int, currentStory: CharacterDetailsEntity?) async {
+    func toggleStoryLike(characterId: Int, currentStory: CharacterDetailsEntity?) async {
         if let story = currentStory {
             var updatedStory = story
             updatedStory.isLiked.toggle()
             await repository.updateStory(updatedStory)
         } else {
-            let newStory = CharacterDetailsEntity(id: userId, isSeen: false, isLiked: true)
+            let newStory = CharacterDetailsEntity(id: characterId, isSeen: false, isLiked: true)
             await repository.updateStory(newStory)
         }
     }

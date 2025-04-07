@@ -5,22 +5,25 @@
 //  Created by Arkadiy KAZAZYAN on 06/04/2025.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct CharactersGridView: View {
     let store: StoreOf<CharactersGridFeature>
-    
+
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
+
     init() {
-        self.store = Store(initialState: CharactersGridFeature.State(),
-                           reducer: { CharactersGridFeature() })
+        self.store = Store(initialState: CharactersGridFeature.State()) { CharactersGridFeature() }
     }
-    
-    private let columns: [GridItem] = [
-        GridItem(.flexible(), spacing: 15),
-        GridItem(.flexible(), spacing: 15)
-    ]
-    
+
+    // Computed property for dynamic columns based on orientation
+    private var columns: [GridItem] {
+        let columnCount = orientation.isLandscape ? 4 : 2
+        return Array(repeating: GridItem(.flexible(), spacing: 15), count: columnCount)
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -38,8 +41,13 @@ struct CharactersGridView: View {
         .onAppear {
             store.send(.onAppear)
         }
+        .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+            withAnimation(.easeInOut(duration: 0.3)) {
+                orientation = UIDevice.current.orientation
+            }
+        }
     }
-    
+
     @ViewBuilder
     private func errorView(_ error: Error) -> some View {
         VStack {
@@ -53,19 +61,19 @@ struct CharactersGridView: View {
             .padding()
         }
     }
-    
+
     @ViewBuilder
     private var storyGrid: some View {
         LazyVGrid(columns: columns, spacing: 15) {
             ForEach(store.state.characters) { character in
-                CharacterPreviewView(user: character)
+                CharacterPreviewView(character: character)
                     .onAppear {
                         if character.id == store.state.characters.last?.id {
                             store.send(.loadMore)
                         }
                     }
             }
-            
+
             if store.state.isLoadingMore {
                 ProgressView()
                     .frame(maxWidth: .infinity)

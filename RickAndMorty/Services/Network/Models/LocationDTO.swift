@@ -11,7 +11,7 @@ import Foundation
 struct LocationDTO: Codable {
     let name: String
     let url: String
-    
+
     enum CodingKeys: CodingKey {
         case name
         case url

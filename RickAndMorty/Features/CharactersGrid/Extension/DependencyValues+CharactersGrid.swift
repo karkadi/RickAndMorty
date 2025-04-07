@@ -26,7 +26,6 @@ enum CharactersGridUseCaseKey: DependencyKey {
 
 // MARK: - Dependency Registration
 extension DependencyValues {
-
     var repositoryCharactersGrid: any CharactersGridRepository {
         get { self[CharactersGridRepositoryKey.self] }
         set { self[CharactersGridRepositoryKey.self] = newValue }

@@ -26,7 +26,6 @@ enum CharacterDetailsUseCaseKey: DependencyKey {
 
 // MARK: - Dependency Registration
 extension DependencyValues {
-
     var repositoryCharacterDetails: any CharacterDetailsRepository {
         get { self[CharacterDetailsRepositoryKey.self] }
         set { self[CharacterDetailsRepositoryKey.self] = newValue }

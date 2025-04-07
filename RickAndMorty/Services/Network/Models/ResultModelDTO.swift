@@ -35,5 +35,4 @@ struct ResultModelDTO: Codable, Identifiable {
         case url
         case created
     }
-
 }

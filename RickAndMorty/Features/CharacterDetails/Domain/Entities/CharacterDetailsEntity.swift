@@ -5,7 +5,7 @@
 //  Created by Arkadiy KAZAZYAN on 06/04/2025.
 //
 
-struct CharacterDetailsEntity : Equatable {
+struct CharacterDetailsEntity: Equatable {
     var id: Int
     var isSeen: Bool
     var isLiked: Bool

@@ -11,7 +11,7 @@ import Foundation
 struct RickAndMortyDTO: Codable {
     let info: InfoDTO
     let results: [ResultModelDTO]
-    
+
     enum CodingKeys: CodingKey {
         case info
         case results

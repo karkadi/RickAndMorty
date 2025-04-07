@@ -9,7 +9,6 @@ import Foundation
 
 // MARK: - Result
 struct ResultModelEntity: Equatable, Identifiable {
-
     let id: Int
     let name: String
     let status: String
@@ -19,7 +18,7 @@ struct ResultModelEntity: Equatable, Identifiable {
     let image: String
     let created: String
 
-    static func == (lhs: ResultModelEntity, rhs: ResultModelEntity) -> Bool {
+    static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
     }
 }

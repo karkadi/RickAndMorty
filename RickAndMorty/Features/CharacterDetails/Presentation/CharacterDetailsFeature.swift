@@ -15,10 +15,10 @@ struct CharacterDetailsFeature {
     // MARK: - State
     @ObservableState
     struct State: Equatable {
-        let user: ResultModelEntity
+        let character: ResultModelEntity
         var characterState: CharacterDetailsEntity?
     }
-    
+
     // MARK: - Action
     enum Action {
         case onAppear
@@ -26,21 +26,21 @@ struct CharacterDetailsFeature {
         case toggleLike
         case characterStateLoaded(CharacterDetailsEntity?)
     }
-    
+
     // MARK: - Reducer
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .run { [characterId = state.user.id] send in
+                return .run { [characterId = state.character.id] send in
                     let characterState = await useCase.fetchCharacterState(for: characterId)
                     await send(.markAsSeen(characterState))
                 }
 
             case .markAsSeen(let story):
-                return .run { [characterId = state.user.id] send in
+                return .run { [characterId = state.character.id] send in
                     await useCase.markStoryAsSeen(
-                        userId: characterId,
+                        characterId: characterId,
                         currentStory: story
                     )
                     let updatedStory = await useCase.fetchCharacterState(for: characterId)
@@ -48,9 +48,9 @@ struct CharacterDetailsFeature {
                 }
 
             case .toggleLike:
-                return .run { [characterId = state.user.id, currentStory = state.characterState] send in
+                return .run { [characterId = state.character.id, currentStory = state.characterState] send in
                     await useCase.toggleStoryLike(
-                        userId: characterId,
+                        characterId: characterId,
                         currentStory: currentStory
                     )
                     let updatedStory = await useCase.fetchCharacterState(for: characterId)

@@ -15,11 +15,12 @@ protocol NetworkService {
 // MARK: - Mock
 
 class MockRickAndMortyService: NetworkService {
-    func fetchCharacters(from urlString: String) async throws -> RickAndMortyDTO { Self.mockedCharacters! }
+    func fetchCharacters(from _: String) async throws -> RickAndMortyDTO { Self.mockedCharacters! }
 
     static var mockedCharacters: RickAndMortyDTO? {
+        guard let mockedData = Self.mockedData.data(using: .utf8) else { return nil }
         let decoder = JSONDecoder()
-        return try? decoder.decode(RickAndMortyDTO.self, from: Self.mockedData.data(using: .utf8)! )
+        return try? decoder.decode(RickAndMortyDTO.self, from: mockedData )
     }
 
     static let mockedData = """

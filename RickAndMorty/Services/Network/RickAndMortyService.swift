@@ -8,7 +8,6 @@
 import Foundation
 
 class RickAndMortyService: NetworkService {
-
     func fetchCharacters(from urlString: String) async throws -> RickAndMortyDTO {
         guard let url = URL(string: urlString) else {
             throw NetworkError.invalidURL
@@ -39,7 +38,6 @@ enum NetworkError: Error {
 
 // Example usage:
 func exampleUsage() {
-
 //    Task {
 //        do {
 //            let rickAndMortyData = try await RickAndMortyService.shared.fetchCharactersAsync()
