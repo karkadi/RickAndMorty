@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5B05A34C2DA2A6DE00BD1A92 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5B05A34B2DA2A6DE00BD1A92 /* ComposableArchitecture */; };
+		5B3B568E2DA4464C00CB0185 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 5B3B568D2DA4464C00CB0185 /* CachedAsyncImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B05A34C2DA2A6DE00BD1A92 /* ComposableArchitecture in Frameworks */,
+				5B3B568E2DA4464C00CB0185 /* CachedAsyncImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +121,7 @@
 			name = RickAndMorty;
 			packageProductDependencies = (
 				5B05A34B2DA2A6DE00BD1A92 /* ComposableArchitecture */,
+				5B3B568D2DA4464C00CB0185 /* CachedAsyncImage */,
 			);
 			productName = RickAndMorty;
 			productReference = 5B05A2F82DA29F1C00BD1A92 /* RickAndMorty.app */;
@@ -204,6 +207,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				5B05A34A2DA2A6DE00BD1A92 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				5B3B568C2DA4464C00CB0185 /* XCRemoteSwiftPackageReference "CachedAsyncImage" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5B05A2F92DA29F1C00BD1A92 /* Products */;
@@ -601,6 +605,14 @@
 				minimumVersion = 1.19.0;
 			};
 		};
+		5B3B568C2DA4464C00CB0185 /* XCRemoteSwiftPackageReference "CachedAsyncImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bullinnyc/CachedAsyncImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -608,6 +620,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5B05A34A2DA2A6DE00BD1A92 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		5B3B568D2DA4464C00CB0185 /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5B3B568C2DA4464C00CB0185 /* XCRemoteSwiftPackageReference "CachedAsyncImage" */;
+			productName = CachedAsyncImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

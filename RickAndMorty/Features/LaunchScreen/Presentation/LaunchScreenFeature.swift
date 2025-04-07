@@ -16,7 +16,6 @@ struct LaunchScreenFeature {
     @ObservableState
     struct State: Equatable {
         var entity: LaunchScreenEntity = .splashScreen
-        var isLandingContentVisible: Bool = false
     }
 
     // MARK: - Action
@@ -31,7 +30,6 @@ struct LaunchScreenFeature {
             switch action {
             case .onAppear:
                 state.entity = useCase.goToScreen(to: .landingScreen)
-                state.isLandingContentVisible = true
                 return .none
 
             case .startButtonTapped:

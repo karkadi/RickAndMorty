@@ -36,30 +36,28 @@ struct LaunchScreenView: View {
     private var landingScreen: some View {
         ZStack {
             MetalView()
-                .opacity(store.state.isLandingContentVisible ? 1 : 0)
+
             VStack {
                 Spacer()
                 Button(action: {
                     store.send(.startButtonTapped, animation: .easeInOut(duration: 1.0))
                 }, label: {
-                    Text("Start")
-                        .font(.title)
-                        .foregroundColor(.white)
+                    Image("Rick_et_Morty_Logo_FR")
+                        .resizable()
+                        .scaledToFit()
                         .padding()
-                        .frame(maxWidth: .infinity)
                         .background(
                             RoundedRectangle(cornerRadius: 10)
                                 .strokeBorder(lineWidth: 2))
                         .foregroundColor(.yellow)
-                        .shadow(color: .yellow, radius: 5)
-                        .shadow(color: .yellow, radius: 20)
-                        .shadow(color: .yellow, radius: 50)
-                        .scaleEffect(store.state.isLandingContentVisible ? 1 : 0.5)
-                        .opacity(store.state.isLandingContentVisible ? 1 : 0)
+                        .shadow(color: .yellow, radius: 2)
+                        .shadow(color: .yellow, radius: 4)
+                        .shadow(color: .yellow, radius: 10)
                 })
+
                 Spacer()
             }
-            .padding([.leading, .trailing], 50)
+            .padding([.leading, .trailing], 20)
         }
         .background(Color.background)
         .transition(.opacity)

@@ -5,6 +5,7 @@
 //  Created by Arkadiy KAZAZYAN on 06/04/2025.
 //
 
+import CachedAsyncImage
 import ComposableArchitecture
 import SwiftUI
 
@@ -12,7 +13,9 @@ struct CharacterPreviewView: View {
     let store: StoreOf<CharacterPreviewFeature>
 
     init(character: ResultModelEntity) {
-        self.store = Store(initialState: CharacterPreviewFeature.State(character: character)) { CharacterPreviewFeature() }
+        self.store = Store(initialState: CharacterPreviewFeature.State(character: character)) {
+            CharacterPreviewFeature()
+        }
     }
 
     var body: some View {
@@ -21,13 +24,23 @@ struct CharacterPreviewView: View {
         } label: {
             VStack(spacing: 8) {
                 ZStack(alignment: .bottomTrailing) {
-                    AsyncImage(url: URL(string: store.character.image)) { image in
-                        image
+                    CachedAsyncImage(url: store.character.image,
+                                     placeholder: { progress in
+                        ZStack {
+                            Color.background
+                            ProgressView {
+                                VStack {
+                                    Text("Loading...")
+                                    Text("\(progress) %")
+                                }
+                            }
+                        }
+                    },
+                                     image: {
+                        Image(uiImage: $0)
                             .resizable()
                             .scaledToFill()
-                    } placeholder: {
-                        ProgressView()
-                    }
+                    })
                     .frame(width: 100, height: 100)
                     .clipShape(Circle())
                     .overlay(
