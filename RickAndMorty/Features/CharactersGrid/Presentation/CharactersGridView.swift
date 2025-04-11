@@ -9,13 +9,13 @@ import ComposableArchitecture
 import SwiftUI
 
 struct CharactersGridView: View {
-    let store: StoreOf<CharactersGridFeature>
+    let store: StoreOf<CharactersGridViewModel>
 
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
 
     init() {
-        self.store = Store(initialState: CharactersGridFeature.State()) { CharactersGridFeature() }
+        self.store = Store(initialState: CharactersGridViewModel.State()) { CharactersGridViewModel() }
     }
 
     // Computed property for dynamic columns based on orientation
@@ -62,7 +62,6 @@ struct CharactersGridView: View {
         }
     }
 
-    @ViewBuilder
     private var storyGrid: some View {
         LazyVGrid(columns: columns, spacing: 15) {
             ForEach(store.state.characters) { character in

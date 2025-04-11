@@ -9,10 +9,10 @@ import ComposableArchitecture
 import SwiftUI
 
 struct LaunchScreenView: View {
-    let store: StoreOf<LaunchScreenFeature>
+    let store: StoreOf<LaunchScreenViewModel>
 
     init() {
-        self.store = Store(initialState: LaunchScreenFeature.State()) { LaunchScreenFeature() }
+        self.store = Store(initialState: LaunchScreenViewModel.State()) { LaunchScreenViewModel() }
     }
 
     var body: some View {

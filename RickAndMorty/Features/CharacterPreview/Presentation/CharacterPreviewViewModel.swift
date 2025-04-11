@@ -1,5 +1,5 @@
 //
-//  CharacterPreviewFeature.swift
+//  CharacterPreviewViewModel.swift
 //  RickAndMorty
 //
 //  Created by Arkadiy KAZAZYAN on 06/04/2025.
@@ -8,7 +8,7 @@
 import ComposableArchitecture
 
 @Reducer
-struct CharacterPreviewFeature {
+struct CharacterPreviewViewModel {
     // MARK: - Dependencies
     @Dependency(\.useCaseCharacterPreview) private var useCase
 
@@ -16,14 +16,13 @@ struct CharacterPreviewFeature {
     @ObservableState
     struct State: Equatable {
         let character: ResultModelEntity
-        var isSeen: Bool = false
-        var isLiked: Bool = false
+        var entiryState: CharacterPreviewEntity
     }
 
     // MARK: - Action
     enum Action {
         case onAppear
-        case characterStateLoaded(CharacterPreviewEntity?)
+        case characterStateLoaded(CharacterPreviewEntity)
     }
 
     // MARK: - Reducer
@@ -31,14 +30,13 @@ struct CharacterPreviewFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .run { [characterId = state.character.id] send in
-                    let characterState = await useCase.fetchCharacterState(for: characterId)
-                    await send(.characterStateLoaded(characterState))
+                return .run { [state] send in
+                    let entiryState = try await useCase.fetchCharacterState(for: state.entiryState)
+                    await send(.characterStateLoaded(entiryState))
                 }
 
-            case .characterStateLoaded(let characterState):
-                state.isSeen = characterState?.isSeen ?? false
-                state.isLiked = characterState?.isLiked ?? false
+            case .characterStateLoaded(let entry):
+                state.entiryState = entry
                 return .none
             }
         }

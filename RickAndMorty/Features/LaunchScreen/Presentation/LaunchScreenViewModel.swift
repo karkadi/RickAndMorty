@@ -1,5 +1,5 @@
 //
-//  LaunchScreenFeature.swift
+//  LaunchScreenViewModel.swift
 //  RickAndMorty
 //
 //  Created by Arkadiy KAZAZYAN on 06/04/2025.
@@ -8,7 +8,7 @@
 import ComposableArchitecture
 
 @Reducer
-struct LaunchScreenFeature {
+struct LaunchScreenViewModel {
     // MARK: - Dependencies
     @Dependency(\.useCaseLaunchScreen) private var useCase
 

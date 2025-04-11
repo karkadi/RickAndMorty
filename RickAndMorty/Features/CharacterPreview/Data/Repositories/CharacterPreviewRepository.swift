@@ -5,19 +5,20 @@
 //  Created by Arkadiy KAZAZYAN on 06/04/2025.
 //
 
+import ComposableArchitecture
+
 protocol CharacterPreviewRepository {
-    func fetchCharacterState(characterId: Int) async -> CharacterPreviewEntity?
+    func fetchCharacterState(for entry: inout CharacterPreviewEntity) async throws
 }
 
 class DefaultCharacterPreviewRepository: CharacterPreviewRepository {
-    private let databaseService: DatabaseService
+    @Dependency(\.databaseService) private var databaseService
 
-    init(databaseService: DatabaseService) {
-        self.databaseService = databaseService
-    }
-
-    @MainActor
-    func fetchCharacterState(characterId: Int) async -> CharacterPreviewEntity? {
-        databaseService.fetchCharacterState(for: characterId)?.toCharacterPreviewEntity()
+    func fetchCharacterState(for entry: inout CharacterPreviewEntity) async throws {
+        let characterId = entry.id
+        if let state = try await databaseService.fetchCharacterState(for: characterId) {
+            entry.isLiked = state.isLiked
+            entry.isSeen = state.isSeen
+        }
     }
 }

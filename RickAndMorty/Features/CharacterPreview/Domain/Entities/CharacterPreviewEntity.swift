@@ -6,12 +6,13 @@
 //
 
 struct CharacterPreviewEntity: Equatable {
+    var id: Int
     var isSeen: Bool
     var isLiked: Bool
 }
 
-extension CharacterState {
+extension CharacterStateDTO {
     func toCharacterPreviewEntity() -> CharacterPreviewEntity {
-        CharacterPreviewEntity(isSeen: isSeen, isLiked: isLiked)
+        CharacterPreviewEntity(id: id, isSeen: isSeen, isLiked: isLiked)
     }
 }

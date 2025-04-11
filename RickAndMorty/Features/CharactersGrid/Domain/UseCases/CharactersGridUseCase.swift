@@ -4,6 +4,7 @@
 //
 //  Created by Arkadiy KAZAZYAN on 06/04/2025.
 //
+import ComposableArchitecture
 
 protocol CharactersGridUseCase {
     func fetchCharacters() async throws -> RickAndMortyEntity
@@ -11,13 +12,9 @@ protocol CharactersGridUseCase {
 }
 
 class DefaultCharactersGridUseCase: CharactersGridUseCase {
-    private let repository: CharactersGridRepository
+    @Dependency(\.repositoryCharactersGrid) private var repository
 
     private let firstPage = "https://rickandmortyapi.com/api/character?page=1"
-
-    init(repository: CharactersGridRepository) {
-        self.repository = repository
-    }
 
     func fetchCharacters() async throws -> RickAndMortyEntity {
         try await repository.fetchCharacters(from: firstPage)

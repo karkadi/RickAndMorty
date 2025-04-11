@@ -1,5 +1,5 @@
 //
-//  DependencyValues+StoryView.swift
+//  NetworkServiceKey.swift
 //  RickAndMorty
 //
 //  Created by Arkadiy KAZAZYAN on 18/03/2025.

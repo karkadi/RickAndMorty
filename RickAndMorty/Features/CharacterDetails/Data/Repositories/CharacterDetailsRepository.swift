@@ -5,24 +5,25 @@
 //  Created by Arkadiy KAZAZYAN on 06/04/2025.
 //
 
+import ComposableArchitecture
+
 protocol CharacterDetailsRepository {
-    func fetchCharacterState(characterId: Int) async -> CharacterDetailsEntity?
-    func updateStory(_ story: CharacterDetailsEntity) async
+    func fetchCharacterState(for entry: inout CharacterDetailsEntity) async throws
+    func updateStory(_ story: CharacterDetailsEntity) async throws
 }
 
 class DefaultCharacterDetailsRepository: CharacterDetailsRepository {
-    private let databaseService: DatabaseService
+    @Dependency(\.databaseService) private var databaseService
 
-    init(databaseService: DatabaseService) {
-        self.databaseService = databaseService
+    func fetchCharacterState(for entry: inout CharacterDetailsEntity) async throws {
+        let characterId = entry.id
+        if let state = try await databaseService.fetchCharacterState(for: characterId) {
+            entry.isLiked = state.isLiked
+            entry.isSeen = state.isSeen
+        }
     }
 
-    @MainActor
-    func fetchCharacterState(characterId: Int) async -> CharacterDetailsEntity? {
-        databaseService.fetchCharacterState(for: characterId)?.toCharacterDetailsEntity()
-    }
-    @MainActor
-    func updateStory(_ story: CharacterDetailsEntity) async {
-         databaseService.updateCharacterState(story.toDTO())
+    func updateStory(_ story: CharacterDetailsEntity) async throws {
+        try await databaseService.updateCharacterState(story.toDTO())
     }
 }

@@ -1,5 +1,5 @@
 //
-//  CharactersGridFeature.swift
+//  CharactersGridViewModel.swift
 //  RickAndMorty
 //
 //  Created by Arkadiy KAZAZYAN on 06/04/2025.
@@ -8,7 +8,7 @@
 import ComposableArchitecture
 
 @Reducer
-struct CharactersGridFeature {
+struct CharactersGridViewModel {
     // MARK: - Dependencies
     @Dependency(\.useCaseCharactersGrid) private var useCase
 
@@ -20,7 +20,7 @@ struct CharactersGridFeature {
         var isLoadingMore = false
         var error: Error?
 
-        static func == (lhs: CharactersGridFeature.State, rhs: CharactersGridFeature.State) -> Bool {
+        static func == (lhs: CharactersGridViewModel.State, rhs: CharactersGridViewModel.State) -> Bool {
             lhs.characters == rhs.characters
             && lhs.isLoadingMore == rhs.isLoadingMore
             && (lhs.error == nil) == (rhs.error == nil)

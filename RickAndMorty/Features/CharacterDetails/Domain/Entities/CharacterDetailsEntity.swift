@@ -12,12 +12,12 @@ struct CharacterDetailsEntity: Equatable {
 }
 
 extension CharacterDetailsEntity {
-    func toDTO() -> CharacterState {
-        CharacterState(id: id, isSeen: isSeen, isLiked: isLiked)
+    func toDTO() -> CharacterStateDTO {
+        CharacterStateDTO(id: id, isSeen: isSeen, isLiked: isLiked)
     }
 }
 
-extension CharacterState {
+extension CharacterStateDTO {
     func toCharacterDetailsEntity() -> CharacterDetailsEntity {
         CharacterDetailsEntity(id: id, isSeen: isSeen, isLiked: isLiked)
     }

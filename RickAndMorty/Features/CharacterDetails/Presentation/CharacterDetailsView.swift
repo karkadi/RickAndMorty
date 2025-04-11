@@ -12,11 +12,13 @@ import SwiftUI
 struct CharacterDetailsView: View {
     @Environment(\.dismiss) var dismiss
 
-    let store: StoreOf<CharacterDetailsFeature>
+    let store: StoreOf<CharacterDetailsViewModel>
 
     init(character: ResultModelEntity) {
-        self.store = Store(initialState: CharacterDetailsFeature.State(character: character)) {
-            CharacterDetailsFeature()
+        self.store = Store(initialState:
+                            CharacterDetailsViewModel.State(character: character,
+                                                          entiryState: .init(id: character.id, isSeen: false, isLiked: false))) {
+            CharacterDetailsViewModel()
         }
     }
 
@@ -77,7 +79,7 @@ struct CharacterDetailsView: View {
                 Button(action: {
                     store.send(.toggleLike)
                 }, label: {
-                    Image(systemName: store.state.characterState?.isLiked ?? false ? "heart.fill" : "heart")
+                    Image(systemName: store.entiryState.isLiked ? "heart.fill" : "heart")
                         .foregroundColor(.red)
                 })
             }

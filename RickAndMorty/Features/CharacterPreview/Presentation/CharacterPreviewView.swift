@@ -10,11 +10,11 @@ import ComposableArchitecture
 import SwiftUI
 
 struct CharacterPreviewView: View {
-    let store: StoreOf<CharacterPreviewFeature>
+    let store: StoreOf<CharacterPreviewViewModel>
 
     init(character: ResultModelEntity) {
-        self.store = Store(initialState: CharacterPreviewFeature.State(character: character)) {
-            CharacterPreviewFeature()
+        self.store = Store(initialState: CharacterPreviewViewModel.State(character: character, entiryState: .init(id: character.id, isSeen: false, isLiked: false))) {
+            CharacterPreviewViewModel()
         }
     }
 
@@ -45,9 +45,9 @@ struct CharacterPreviewView: View {
                     .clipShape(Circle())
                     .overlay(
                         Circle()
-                            .stroke(store.isSeen ? Color.gray : Color.blue, lineWidth: 2)
+                            .stroke(store.entiryState.isSeen ? Color.gray : Color.blue, lineWidth: 2)
                     )
-                    if store.isLiked {
+                    if store.entiryState.isLiked {
                         Image(systemName: "heart.fill" )
                             .foregroundColor(.red)
                     }
