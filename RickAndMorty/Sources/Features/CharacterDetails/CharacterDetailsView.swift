@@ -39,6 +39,25 @@ struct CharacterDetailsView: View {
                 .transaction { transaction in
                     transaction.animation = .spring(response: 0.5, dampingFraction: 0.65, blendDuration: 0.025)
                 }
+                HStack {
+                    Spacer()
+
+                    Button {
+                        store.send(.toggleLike)
+                    } label: {
+                        Label {
+                            Text("Like")
+                        } icon: {
+                            Image(systemName: store.entiryState.isLiked ? "heart.fill" : "heart")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 40, height: 40)
+                                .foregroundStyle(.red)
+                        }
+                        .labelStyle(.iconOnly)
+                    }
+                    .padding(.horizontal)
+                }
                 centeredText(title: "Status : ", text: store.character.status)
                 centeredText(title: "Species : ", text: store.character.species)
                 centeredText(title: "Type : ", text: store.character.type)
@@ -51,34 +70,31 @@ struct CharacterDetailsView: View {
             store.send(.onAppear)
         }
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text(store.character.name)
-                    .foregroundColor(.white)
-                    .font(.headline)
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    store.send(.toggleLike)
-                }, label: {
-                    Image(systemName: store.entiryState.isLiked ? "heart.fill" : "heart")
-                        .foregroundColor(.red)
-                })
-            }
-        }
-        .toolbarBackground(.black.opacity(0.5), for: .navigationBar)
-        .toolbarBackground(.visible, for: .navigationBar)
+        .navigationTitle(store.character.name)
     }
 
     private func centeredText(title: String, text: String) -> some View {
         HStack(alignment: .center, spacing: 0.0 ) {
             Text(title)
                 .frame(maxWidth: .infinity, alignment: .trailing)
-                .foregroundColor(Color(#colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)))
+                .foregroundColor(.textGreyColor)
             Text(text)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(Color(#colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)))
+                .foregroundColor(.textGreyColor)
         }
+    }
+}
+
+struct PurpleTextColorLabelStyle: LabelStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        Label(
+            title: {
+                configuration.title
+            },
+            icon: { configuration.icon
+                .foregroundColor(.red)
+            }
+        )
     }
 }
 
@@ -88,7 +104,7 @@ struct CharacterDetailsView: View {
                                                                       entiryState: .init(id: character.id))) {
             CharacterDetailsFeature()
         }
-        NavigationView {
+        NavigationStack {
             CharacterDetailsView(store: store)
         }
     } else {

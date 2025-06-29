@@ -1,5 +1,5 @@
 //
-//  DatabaseClient.swift
+//  SwiftDataService.swift
 //  RickAndMorty
 //
 //  Created by Arkadiy KAZAZYAN on 14/03/2025.
@@ -9,13 +9,13 @@ import Foundation
 import SwiftData
 
 // MARK: - Protocol
-protocol DatabaseClient {
+protocol DatabaseClientProtocol {
     func fetchCharacterState(for characterId: Int) async throws -> CharacterStateDTO?
     func updateCharacterState(_ state: CharacterStateDTO) async throws
  }
 
 // MARK: - Live Implementation
-actor SwiftDataService: DatabaseClient {
+actor SwiftDataService: DatabaseClientProtocol {
     private let modelContext: ModelContext
 
      init(modelContainer: ModelContainer) {
@@ -59,7 +59,7 @@ actor SwiftDataService: DatabaseClient {
 
 // MARK: - Dependency Keys
 enum DatabaseClientKey: DependencyKey {
-    static let liveValue: any DatabaseClient = {
+    static let liveValue: any DatabaseClientProtocol = {
         do {
             let container = try ModelContainer(for: CharacterState.self)
             return SwiftDataService(modelContainer: container)
@@ -71,7 +71,7 @@ enum DatabaseClientKey: DependencyKey {
 
 // MARK: - Dependency Registration
 extension DependencyValues {
-    var databaseClient: any DatabaseClient {
+    var databaseClient: any DatabaseClientProtocol {
         get { self[DatabaseClientKey.self] }
         set { self[DatabaseClientKey.self] = newValue }
     }

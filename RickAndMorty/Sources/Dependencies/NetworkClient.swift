@@ -8,12 +8,12 @@ import ComposableArchitecture
 import Foundation
 
 // MARK: - Protocol
-protocol NetworkClient {
+protocol NetworkClientProtocol {
     func fetchCharacters(from urlString: String)async throws -> RickAndMortyDTO
 }
 
 // MARK: - Live Implementation
-class DefaultNetworkClient: NetworkClient {
+class NetworkClient: NetworkClientProtocol {
     func fetchCharacters(from urlString: String) async throws -> RickAndMortyDTO {
         guard let url = URL(string: urlString) else {
             throw NetworkError.invalidURL
@@ -44,21 +44,21 @@ enum NetworkError: Error {
 
 // MARK: - Dependency Keys
 enum NetworkServiceKey: DependencyKey {
-    static let liveValue: any NetworkClient = DefaultNetworkClient()
-    static let testValue: any NetworkClient = MockRickAndMortyService()
-    static let previewValue: any NetworkClient = MockRickAndMortyService()
+    static let liveValue: any NetworkClientProtocol = NetworkClient()
+    static let testValue: any NetworkClientProtocol = MockRickAndMortyService()
+    static let previewValue: any NetworkClientProtocol = MockRickAndMortyService()
 }
 
 // MARK: - Dependency Registration
 extension DependencyValues {
-    var networkClient: any NetworkClient {
+    var networkClient: any NetworkClientProtocol {
         get { self[NetworkServiceKey.self] }
         set { self[NetworkServiceKey.self] = newValue }
     }
 }
 
 // MARK: - Mock
-class MockRickAndMortyService: NetworkClient {
+class MockRickAndMortyService: NetworkClientProtocol {
     func fetchCharacters(from _: String) async throws -> RickAndMortyDTO { Self.mockedCharacters! }
 
     static var mockedCharacters: RickAndMortyDTO? {

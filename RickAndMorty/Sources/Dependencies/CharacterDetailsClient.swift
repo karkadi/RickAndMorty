@@ -1,5 +1,5 @@
 //
-//  CharactersGridClient.swift
+//  CharacterDetailsClient.swift
 //  TCATestApp
 //
 //  Created by Arkadiy KAZAZYAN on 27/05/2025.
@@ -7,34 +7,49 @@
 import ComposableArchitecture
 
 // MARK: - Protocol
-protocol CharactersGridClient {
-    func fetchCharacters() async throws -> RickAndMortyEntity
-    func fetchMoreCharacters(from info: InfoEntity?) async throws -> RickAndMortyEntity
+protocol CharacterDetailsClientProtocol {
+    func fetchCharacterState(for entry: CharacterDetailsEntity) async throws -> CharacterDetailsEntity
+    func markStoryAsSeen(for entry: CharacterDetailsEntity) async throws -> CharacterDetailsEntity
+    func toggleStoryLike(for entry: CharacterDetailsEntity) async throws -> CharacterDetailsEntity
 }
 
 // MARK: - Live Implementation
-final class DefaultCharactersGridClient: CharactersGridClient {
+final class CharacterDetailsClient: CharacterDetailsClientProtocol {
     // MARK: - Dependencies
-    @Dependency(\.networkClient) private var networkClient
+    @Dependency(\.databaseClient) private var databaseClient
 
-    func fetchCharacters() async throws -> RickAndMortyEntity {
-        try await networkClient.fetchCharacters(from: Constants.firstPage).toEntity()
+    func fetchCharacterState(for entry: CharacterDetailsEntity) async throws -> CharacterDetailsEntity {
+        var updatedStory = entry
+        if let state = try await databaseClient.fetchCharacterState(for: entry.id) {
+            updatedStory.isLiked = state.isLiked
+            updatedStory.isSeen = state.isSeen
+        }
+        return updatedStory
     }
 
-    func fetchMoreCharacters(from info: InfoEntity?) async throws -> RickAndMortyEntity {
-        try await networkClient.fetchCharacters(from: info?.next ?? "").toEntity()
+    func markStoryAsSeen(for entry: CharacterDetailsEntity) async throws -> CharacterDetailsEntity {
+        var updatedEntry = entry
+        updatedEntry.isSeen = true
+        try await databaseClient.updateCharacterState(updatedEntry.toDTO())
+        return updatedEntry
+    }
+    func toggleStoryLike(for entry: CharacterDetailsEntity) async throws -> CharacterDetailsEntity {
+        var updatedStory = entry
+        updatedStory.isLiked.toggle()
+        try await databaseClient.updateCharacterState(updatedStory.toDTO())
+        return updatedStory
     }
 }
 
 // MARK: - Dependency Keys
-enum CharactersGridClientKey: DependencyKey {
-    static let liveValue: any CharactersGridClient = DefaultCharactersGridClient()
+enum CharacterDetailsClientKey: DependencyKey {
+    static let liveValue: any CharacterDetailsClientProtocol = CharacterDetailsClient()
 }
 
 // MARK: - Dependency Registration
 extension DependencyValues {
-    var charactersGridClient: CharactersGridClient {
-        get { self[CharactersGridClientKey.self] }
-        set { self[CharactersGridClientKey.self] = newValue }
+    var characterDetailsClient: CharacterDetailsClientProtocol {
+        get { self[CharacterDetailsClientKey.self] }
+        set { self[CharacterDetailsClientKey.self] = newValue }
     }
 }

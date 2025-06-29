@@ -40,7 +40,6 @@ struct CharactersGridFeature {
 
         case storiesLoaded(Result<RickAndMortyEntity, Error>)
         case moreStoriesLoaded(Result<RickAndMortyEntity, Error>)
-     //   case showDetails(ResultModelEntity)
 
         enum View {
              case onAppear
@@ -82,10 +81,6 @@ struct CharactersGridFeature {
 
             case .path:
                 return .none
-
-//            case .showDetails(let character):
-//                state.path.append(.storyDetails(.init(character: character, entiryState: .init(id: character.id))))
-//                return .none
 
             case .moreStoriesLoaded(.success(let data)):
                 state.characters.append(contentsOf: data.results)
