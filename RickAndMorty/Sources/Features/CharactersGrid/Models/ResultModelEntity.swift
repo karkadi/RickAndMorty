@@ -17,9 +17,17 @@ struct ResultModelEntity: Equatable, Identifiable {
     let gender: String
     let image: String
     let created: String
+    var isSeen: Bool = false
+    var isLiked: Bool = false
 
     static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
+    }
+}
+
+extension ResultModelEntity {
+    func toDTO() -> CharacterStateDTO {
+        CharacterStateDTO(id: id, isSeen: isSeen, isLiked: isLiked)
     }
 }
 

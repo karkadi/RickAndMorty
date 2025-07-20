@@ -1,6 +1,6 @@
 //
 //  CharactersGridClient.swift
-//  TCATestApp
+//  RickAndMorty
 //
 //  Created by Arkadiy KAZAZYAN on 27/05/2025.
 //

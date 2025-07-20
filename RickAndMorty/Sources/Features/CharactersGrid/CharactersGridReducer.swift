@@ -1,5 +1,5 @@
 //
-//  CharactersGridFeature.swift
+//  CharactersGridReducer.swift
 //  RickAndMorty
 //
 //  Created by Arkadiy KAZAZYAN on 06/04/2025.
@@ -8,13 +8,13 @@
 import ComposableArchitecture
 
 @Reducer
-struct CharactersGridFeature {
+struct CharactersGridReducer {
     // MARK: - Dependencies
     @Dependency(\.charactersGridClient) private var charactersGridClient
 
     @Reducer(state: .equatable)
     enum Path {
-        case storyDetails(CharacterDetailsFeature)
+        case storyDetails(CharacterDetailsReducer)
     }
 
     // MARK: - State
@@ -23,10 +23,10 @@ struct CharactersGridFeature {
         var info: InfoEntity?
         var characters: [ResultModelEntity] = []
         var isLoadingMore = false
+        var isCharactersLoaded = false
         var error: Error?
-        var path = StackState<Path.State>()
 
-        static func == (lhs: CharactersGridFeature.State, rhs: CharactersGridFeature.State) -> Bool {
+        static func == (lhs: CharactersGridReducer.State, rhs: CharactersGridReducer.State) -> Bool {
             lhs.characters == rhs.characters
             && lhs.isLoadingMore == rhs.isLoadingMore
             && (lhs.error == nil) == (rhs.error == nil)
@@ -35,27 +35,39 @@ struct CharactersGridFeature {
 
     // MARK: - Action
     enum Action: ViewAction {
-        case view(View)
-        case path(StackActionOf<Path>)
+        case navigateToStoryDetails(ResultModelEntity)
+
+        case updateItem(ResultModelEntity)
 
         case storiesLoaded(Result<RickAndMortyEntity, Error>)
         case moreStoriesLoaded(Result<RickAndMortyEntity, Error>)
 
+        case view(View)
+
         enum View {
-             case onAppear
-             case refresh
-             case loadMore
-         }
+            case onAppear
+            case refresh
+            case loadMore
+            case navigateToAbout
+        }
     }
 
     // MARK: - Reducer
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .view(.onAppear):
-                return .run { send in
-                    await send(.view(.refresh))
+            case .updateItem(let item):
+                if let index = state.characters.firstIndex(where: { $0.id == item.id }) {
+                    state.characters[index] = item
                 }
+                return .none
+
+            case .navigateToStoryDetails, .view(.navigateToAbout):
+                return .none // Navigation handled by parent
+
+            case .view(.onAppear):
+                if state.isCharactersLoaded { return .none }
+                return .send(.view(.refresh))
 
             case .view(.refresh):
                 return .run { send in
@@ -79,14 +91,12 @@ struct CharactersGridFeature {
                     }
                 }
 
-            case .path:
-                return .none
-
             case .moreStoriesLoaded(.success(let data)):
                 state.characters.append(contentsOf: data.results)
                 state.info = data.info
                 state.error = nil
                 state.isLoadingMore = false
+                state.isCharactersLoaded = true
                 return .none
 
             case .moreStoriesLoaded(.failure(let error)):
@@ -107,7 +117,6 @@ struct CharactersGridFeature {
                 return .none
             }
         }
-        .forEach(\.path, action: \.path)
         ._printChanges()
     }
 }

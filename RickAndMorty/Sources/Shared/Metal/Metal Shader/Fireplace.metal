@@ -1,5 +1,11 @@
-// Fireplace.metal
+//
+// FireShader.metal
+// FireSheider
+//
+//  Created by Arkadiy KAZAZYAN on 28/03/2025.
+//
 
+#include "Shared.h"
 #include <metal_stdlib>
 using namespace metal;
 
@@ -117,28 +123,8 @@ float2 noiseStackUV(float3 pos, int octaves, float falloff, float diff) {
     return float2(displaceA, displaceB);
 }
 
-struct Uniforms {
-    float time;
-    float2 resolution;
-    float2 mouse;
-};
-
-struct FragmentInput {
-    float4 position [[position]];
-};
-
-vertex FragmentInput vertex_main(uint vertexID [[vertex_id]]) {
-    float4 vertices[] = {
-        float4(-1.0, -1.0, 0.0, 1.0),
-        float4( 1.0, -1.0, 0.0, 1.0),
-        float4(-1.0,  1.0, 0.0, 1.0),
-        float4( 1.0,  1.0, 0.0, 1.0)
-    };
-    return { vertices[vertexID] };
-}
-
 // Fragment Shader
-fragment float4 fragmentFunction(FragmentInput in [[stage_in]],
+fragment float4 fragment_main_fire(FragmentInput in [[stage_in]],
                                        constant Uniforms &uniforms [[buffer(0)]])
 {
     float2 fragCoord = uniforms.resolution - in.position.xy; // 180-degree rotation

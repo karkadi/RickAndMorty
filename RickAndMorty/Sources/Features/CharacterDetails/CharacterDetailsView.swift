@@ -10,7 +10,7 @@ import ComposableArchitecture
 import SwiftUI
 
 struct CharacterDetailsView: View {
-    let store: StoreOf<CharacterDetailsFeature>
+    let store: StoreOf<CharacterDetailsReducer>
 
     var body: some View {
         ScrollView {
@@ -48,7 +48,7 @@ struct CharacterDetailsView: View {
                         Label {
                             Text("Like")
                         } icon: {
-                            Image(systemName: store.entiryState.isLiked ? "heart.fill" : "heart")
+                            Image(systemName: store.character.isLiked ? "heart.fill" : "heart")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 40, height: 40)
@@ -100,9 +100,8 @@ struct PurpleTextColorLabelStyle: LabelStyle {
 
 #Preview {
     if let character = MockRickAndMortyService.mockedCharacters?.results.first?.toEntity() {
-        let store = Store(initialState: CharacterDetailsFeature.State(character: character,
-                                                                      entiryState: .init(id: character.id))) {
-            CharacterDetailsFeature()
+        let store = Store(initialState: CharacterDetailsReducer.State(character: character)) {
+            CharacterDetailsReducer()
         }
         NavigationStack {
             CharacterDetailsView(store: store)

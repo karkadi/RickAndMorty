@@ -8,16 +8,11 @@
 import ComposableArchitecture
 import SwiftUI
 
-@ViewAction(for: CharactersGridFeature.self)
+@ViewAction(for: CharactersGridReducer.self)
 struct CharactersGridView: View {
-    @Bindable var store: StoreOf<CharactersGridFeature>
+    @Bindable var store: StoreOf<CharactersGridReducer>
 
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
-
-    init() {
-        self.store = Store(initialState: CharactersGridFeature.State()) { CharactersGridFeature() }
-    }
 
     // Computed property for dynamic columns based on orientation
     private var columns: [GridItem] {
@@ -26,23 +21,27 @@ struct CharactersGridView: View {
     }
 
     var body: some View {
-        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-            ScrollView {
-                if let error = store.error {
-                    errorView(error)
-                } else {
-                    storyGrid
+        ScrollView {
+            if let error = store.error {
+                errorView(error)
+            } else {
+                storyGrid
+            }
+        }
+        .navigationTitle("Rick and Morty")
+        .toolbarBackground(.bar, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    send(.navigateToAbout)
+                } label: {
+                    Image(systemName: "info.circle")
+                        .foregroundColor(.white)
                 }
             }
-            .navigationTitle("Rick and Morty")
-            .refreshable {
-                send(.refresh)
-            }
-        } destination: { destination in
-            switch destination.case {
-            case let .storyDetails(detailsStore):
-                CharacterDetailsView(store: detailsStore)
-            }
+        }
+        .refreshable {
+            send(.refresh)
         }
         .onAppear {
             send(.onAppear)
@@ -72,9 +71,8 @@ struct CharactersGridView: View {
         LazyVGrid(columns: columns, spacing: 15) {
             ForEach(store.state.characters) { character in
                 NavigationLink(state:
-                                CharactersGridFeature.Path.State.storyDetails(
-                                    CharacterDetailsFeature.State(character: character,
-                                                                  entiryState: .init(id: character.id))) ) {
+                                RootReducer.Path.State.storyDetails(
+                                    CharacterDetailsReducer.State(character: character)) ) {
                                                                       CharacterPreviewView(character: character)
                 }
                                                                   .onAppear {
@@ -95,5 +93,6 @@ struct CharactersGridView: View {
 }
 
 #Preview {
-    CharactersGridView()
+    CharactersGridView(store: Store(initialState: CharactersGridReducer.State()) { CharactersGridReducer() }
+    )
 }
