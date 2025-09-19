@@ -43,13 +43,14 @@ struct CharactersGridReducer {
         case moreStoriesLoaded(Result<RickAndMortyEntity, Error>)
 
         case view(View)
-
+        // swiftlint:disable nesting
         enum View {
             case onAppear
             case refresh
             case loadMore
             case navigateToAbout
         }
+        // swiftlint:enable nesting
     }
 
     // MARK: - Reducer
@@ -117,6 +118,6 @@ struct CharactersGridReducer {
                 return .none
             }
         }
-        ._printChanges()
+        //  ._printChanges()
     }
 }

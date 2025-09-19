@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5B05A34C2DA2A6DE00BD1A92 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5B05A34B2DA2A6DE00BD1A92 /* ComposableArchitecture */; };
 		5B3B568E2DA4464C00CB0185 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 5B3B568D2DA4464C00CB0185 /* CachedAsyncImage */; };
+		5BE5D1E72E7DCF8D008A546B /* SQLiteData in Frameworks */ = {isa = PBXBuildFile; productRef = 5BE5D1E62E7DCF8D008A546B /* SQLiteData */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +33,7 @@
 		5B05A2F82DA29F1C00BD1A92 /* RickAndMorty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RickAndMorty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B05A3072DA29F1D00BD1A92 /* RickAndMortyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RickAndMortyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B05A3112DA29F1D00BD1A92 /* RickAndMortyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RickAndMortyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B98F0722E8A9FE6008C7B37 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -39,8 +41,26 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				Sources/Tests/UITests/RickAndMortyUITests.swift,
+				Sources/Tests/UITests/RickAndMortyUITestsLaunchTests.swift,
+				Sources/Tests/UnitTests/RickAndMortyTests.swift,
 			);
 			target = 5B05A2F72DA29F1C00BD1A92 /* RickAndMorty */;
+		};
+		5B98F0892E8AA038008C7B37 /* Exceptions for "RickAndMorty" folder in "RickAndMortyTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Sources/Tests/UnitTests/RickAndMortyTests.swift,
+			);
+			target = 5B05A3062DA29F1D00BD1A92 /* RickAndMortyTests */;
+		};
+		5B98F08A2E8AA038008C7B37 /* Exceptions for "RickAndMorty" folder in "RickAndMortyUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Sources/Tests/UITests/RickAndMortyUITests.swift,
+				Sources/Tests/UITests/RickAndMortyUITestsLaunchTests.swift,
+			);
+			target = 5B05A3102DA29F1D00BD1A92 /* RickAndMortyUITests */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -49,18 +69,10 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				5B2E61332E02F00300DA68FA /* Exceptions for "RickAndMorty" folder in "RickAndMorty" target */,
+				5B98F0892E8AA038008C7B37 /* Exceptions for "RickAndMorty" folder in "RickAndMortyTests" target */,
+				5B98F08A2E8AA038008C7B37 /* Exceptions for "RickAndMorty" folder in "RickAndMortyUITests" target */,
 			);
 			path = RickAndMorty;
-			sourceTree = "<group>";
-		};
-		5B05A30A2DA29F1D00BD1A92 /* RickAndMortyTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = RickAndMortyTests;
-			sourceTree = "<group>";
-		};
-		5B05A3142DA29F1D00BD1A92 /* RickAndMortyUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = RickAndMortyUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -70,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BE5D1E72E7DCF8D008A546B /* SQLiteData in Frameworks */,
 				5B05A34C2DA2A6DE00BD1A92 /* ComposableArchitecture in Frameworks */,
 				5B3B568E2DA4464C00CB0185 /* CachedAsyncImage in Frameworks */,
 			);
@@ -96,9 +109,8 @@
 			isa = PBXGroup;
 			children = (
 				5B05A2FA2DA29F1C00BD1A92 /* RickAndMorty */,
-				5B05A30A2DA29F1D00BD1A92 /* RickAndMortyTests */,
-				5B05A3142DA29F1D00BD1A92 /* RickAndMortyUITests */,
 				5B05A2F92DA29F1C00BD1A92 /* Products */,
+				5B98F0722E8A9FE6008C7B37 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -122,7 +134,7 @@
 				5B05A2F42DA29F1C00BD1A92 /* Sources */,
 				5B05A2F52DA29F1C00BD1A92 /* Frameworks */,
 				5B05A2F62DA29F1C00BD1A92 /* Resources */,
-				5BC798662DA3E1DC006B1706 /* ShellScript */,
+				5BC798662DA3E1DC006B1706 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -135,6 +147,7 @@
 			packageProductDependencies = (
 				5B05A34B2DA2A6DE00BD1A92 /* ComposableArchitecture */,
 				5B3B568D2DA4464C00CB0185 /* CachedAsyncImage */,
+				5BE5D1E62E7DCF8D008A546B /* SQLiteData */,
 			);
 			productName = RickAndMorty;
 			productReference = 5B05A2F82DA29F1C00BD1A92 /* RickAndMorty.app */;
@@ -152,9 +165,6 @@
 			);
 			dependencies = (
 				5B05A3092DA29F1D00BD1A92 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				5B05A30A2DA29F1D00BD1A92 /* RickAndMortyTests */,
 			);
 			name = RickAndMortyTests;
 			packageProductDependencies = (
@@ -176,9 +186,6 @@
 			dependencies = (
 				5B05A3132DA29F1D00BD1A92 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				5B05A3142DA29F1D00BD1A92 /* RickAndMortyUITests */,
-			);
 			name = RickAndMortyUITests;
 			packageProductDependencies = (
 			);
@@ -194,7 +201,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1630;
-				LastUpgradeCheck = 1630;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					5B05A2F72DA29F1C00BD1A92 = {
 						CreatedOnToolsVersion = 16.3;
@@ -221,6 +228,7 @@
 			packageReferences = (
 				5B05A34A2DA2A6DE00BD1A92 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				5B3B568C2DA4464C00CB0185 /* XCRemoteSwiftPackageReference "CachedAsyncImage" */,
+				5BE5D1E52E7DCF8D008A546B /* XCRemoteSwiftPackageReference "sqlite-data" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5B05A2F92DA29F1C00BD1A92 /* Products */;
@@ -259,7 +267,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5BC798662DA3E1DC006B1706 /* ShellScript */ = {
+		5BC798662DA3E1DC006B1706 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -269,6 +277,7 @@
 			);
 			inputPaths = (
 			);
+			name = SwiftLint;
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -376,6 +385,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -433,6 +443,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -445,7 +456,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 34Z5QG59S2;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -475,7 +486,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 34Z5QG59S2;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -628,6 +639,14 @@
 				minimumVersion = 2.6.0;
 			};
 		};
+		5BE5D1E52E7DCF8D008A546B /* XCRemoteSwiftPackageReference "sqlite-data" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/sqlite-data";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -640,6 +659,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5B3B568C2DA4464C00CB0185 /* XCRemoteSwiftPackageReference "CachedAsyncImage" */;
 			productName = CachedAsyncImage;
+		};
+		5BE5D1E62E7DCF8D008A546B /* SQLiteData */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5BE5D1E52E7DCF8D008A546B /* XCRemoteSwiftPackageReference "sqlite-data" */;
+			productName = SQLiteData;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

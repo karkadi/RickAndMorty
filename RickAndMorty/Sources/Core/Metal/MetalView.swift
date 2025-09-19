@@ -1,6 +1,6 @@
 //
 //  MetalView.swift
-//  InstagramLikeApp
+//  RickAndMorty
 //
 //  Created by Arkadiy KAZAZYAN on 09/04/2025.
 //

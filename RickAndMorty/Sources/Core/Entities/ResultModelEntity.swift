@@ -26,8 +26,8 @@ struct ResultModelEntity: Equatable, Identifiable {
 }
 
 extension ResultModelEntity {
-    func toDTO() -> CharacterStateDTO {
-        CharacterStateDTO(id: id, isSeen: isSeen, isLiked: isLiked)
+    func toDTO() -> CharacterState {
+        CharacterState(id: id, isSeen: isSeen, isLiked: isLiked)
     }
 }
 

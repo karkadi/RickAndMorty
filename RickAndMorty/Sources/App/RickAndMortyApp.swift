@@ -6,6 +6,7 @@
 //
 
 import CachedAsyncImage
+import SQLiteData
 import SwiftUI
 
 @main
@@ -18,6 +19,15 @@ struct RickAndMortyApp: App {
     }
 
     init() {
+        do {
+            try prepareDependencies {
+                try $0.bootstrapDatabase()
+            }
+        } catch {
+            // You could log this to a logging framework, crashlytics, etc.
+            print("Failed to prepare dependencies: \(error)")
+            // Optionally handle the error more gracefully, e.g., by showing a UI alert
+        }
         // Set image cache limit.
         ImageCache().wrappedValue.setCacheLimit(
             countLimit: 1_000, // 1000 items

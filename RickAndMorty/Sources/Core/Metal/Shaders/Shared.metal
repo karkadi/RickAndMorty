@@ -1,6 +1,6 @@
 //
 //  Shared.metal
-//  FireSheider
+//  RickAndMorty
 //
 //  Created by Arkadiy KAZAZYAN on 31/03/2025.
 //

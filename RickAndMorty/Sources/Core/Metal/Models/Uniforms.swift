@@ -1,6 +1,6 @@
 //
-//  to.swift
-//  FireSheider
+//  Uniforms.swift
+//  RickAndMorty
 //
 //  Created by Arkadiy KAZAZYAN on 28/03/2025.
 //

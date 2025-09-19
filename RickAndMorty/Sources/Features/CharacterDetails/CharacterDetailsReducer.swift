@@ -10,7 +10,7 @@ import ComposableArchitecture
 @Reducer
 struct CharacterDetailsReducer {
     // MARK: - Dependencies
-    @Dependency(\.characterDetailsClient) private var characterDetailsClient
+    @Dependency(\.databaseClient) private var databaseClient
 
     // MARK: - State
     @ObservableState
@@ -26,10 +26,11 @@ struct CharacterDetailsReducer {
         case characterStateLoaded(ResultModelEntity)
 
         case delegate(Delegate)
-
+        // swiftlint:disable nesting
         enum Delegate: Equatable {
             case updateItem(ResultModelEntity)
         }
+        // swiftlint:enable nesting
     }
 
     // MARK: - Reducer
@@ -38,19 +39,19 @@ struct CharacterDetailsReducer {
             switch action {
             case .onAppear:
                 return .run { [state] send in
-                    let updatedCharacter = try await characterDetailsClient.fetchCharacterState(for: state.character)
+                    let updatedCharacter = try await databaseClient.fetchCharacterState(for: state.character)
                     await send(.markAsSeen(updatedCharacter))
                 }
 
             case .markAsSeen(let updatedCharacter):
                 return .run { send in
-                    let updatedCharacter = try await characterDetailsClient.markStoryAsSeen(for: updatedCharacter)
+                    let updatedCharacter = try await databaseClient.markStoryAsSeen(for: updatedCharacter)
                     await send(.characterStateLoaded(updatedCharacter))
                 }
 
             case .toggleLike:
                 return .run { [state] send in
-                    let updatedCharacter = try await characterDetailsClient.toggleStoryLike(for: state.character)
+                    let updatedCharacter = try await databaseClient.toggleStoryLike(for: state.character)
                     await send(.characterStateLoaded(updatedCharacter))
                 }
 
