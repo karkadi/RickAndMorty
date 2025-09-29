@@ -5,8 +5,9 @@ A SwiftUI-based iPhone application that displays characters from the Rick and Mo
 ## 📸 Screenshots
 
 <div align="center">
+   <img src="./ScreenShoots/main.png" width="30%" />
   <img src="./ScreenShoots/demo.gif" width="30%" />
-  <img src="./ScreenShoots/demo1.gif" width="30%" />
+  <img src="./ScreenShoots/details.png" width="30%" />
 </div>
 
 ## 🎨 Features
