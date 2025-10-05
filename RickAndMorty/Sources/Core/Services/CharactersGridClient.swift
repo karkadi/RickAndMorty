@@ -7,34 +7,33 @@
 import ComposableArchitecture
 
 // MARK: - Protocol
-protocol CharactersGridClientProtocol {
-    func fetchCharacters() async throws -> RickAndMortyEntity
-    func fetchMoreCharacters(from info: InfoEntity?) async throws -> RickAndMortyEntity
+struct CharactersGridClient: Sendable {
+    var fetchCharacters: @Sendable () async throws -> RickAndMortyEntity
+    var fetchMoreCharacters: @Sendable (_ info: InfoEntity?) async throws -> RickAndMortyEntity
 }
 
 // MARK: - Live Implementation
-final class CharactersGridClient: CharactersGridClientProtocol {
-    // MARK: - Dependencies
-    @Dependency(\.networkClient) private var networkClient
-
-    func fetchCharacters() async throws -> RickAndMortyEntity {
-        try await networkClient.fetchCharacters(from: Constants.firstPage).toEntity()
-    }
-
-    func fetchMoreCharacters(from info: InfoEntity?) async throws -> RickAndMortyEntity {
-        try await networkClient.fetchCharacters(from: info?.next ?? "").toEntity()
-    }
-}
-
-// MARK: - Dependency Keys
-enum CharactersGridClientKey: DependencyKey {
-    static let liveValue: any CharactersGridClientProtocol = CharactersGridClient()
+extension CharactersGridClient: DependencyKey {
+    static let liveValue: CharactersGridClient = {
+        // MARK: - Dependencies
+        @Dependency(\.networkClient) var networkClient
+        
+        return CharactersGridClient(
+            fetchCharacters: {
+                try await networkClient.fetchCharacters( Constants.firstPage).toEntity()
+            },
+            
+            fetchMoreCharacters: { info in
+                try await networkClient.fetchCharacters( info?.next ?? "").toEntity()
+            }
+        )
+    }()
 }
 
 // MARK: - Dependency Registration
 extension DependencyValues {
-    var charactersGridClient: CharactersGridClientProtocol {
-        get { self[CharactersGridClientKey.self] }
-        set { self[CharactersGridClientKey.self] = newValue }
+    var charactersGridClient: CharactersGridClient {
+        get { self[CharactersGridClient.self] }
+        set { self[CharactersGridClient.self] = newValue }
     }
 }

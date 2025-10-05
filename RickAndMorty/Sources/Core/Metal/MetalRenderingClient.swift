@@ -7,6 +7,7 @@
 
 import MetalKit
 
+@MainActor
 protocol MetalRenderingClient {
     func configure(mtkView: MTKView) throws
     func updateMouse(location: CGPoint, isDown: Bool)
@@ -14,6 +15,7 @@ protocol MetalRenderingClient {
     func render(in view: MTKView)
 }
 
+@MainActor
 final class DefaultMetalRenderingClient: NSObject, MetalRenderingClient, MTKViewDelegate {
     private let device: MTLDevice
     private let commandQueue: MTLCommandQueue

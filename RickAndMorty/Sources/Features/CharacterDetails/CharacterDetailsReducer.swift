@@ -39,19 +39,19 @@ struct CharacterDetailsReducer {
             switch action {
             case .onAppear:
                 return .run { [state] send in
-                    let updatedCharacter = try await databaseClient.fetchCharacterState(for: state.character)
+                    let updatedCharacter = try await databaseClient.fetchCharacterState(state.character)
                     await send(.markAsSeen(updatedCharacter))
                 }
 
             case .markAsSeen(let updatedCharacter):
                 return .run { send in
-                    let updatedCharacter = try await databaseClient.markStoryAsSeen(for: updatedCharacter)
+                    let updatedCharacter = try await databaseClient.markStoryAsSeen(updatedCharacter)
                     await send(.characterStateLoaded(updatedCharacter))
                 }
 
             case .toggleLike:
                 return .run { [state] send in
-                    let updatedCharacter = try await databaseClient.toggleStoryLike(for: state.character)
+                    let updatedCharacter = try await databaseClient.toggleStoryLike(state.character)
                     await send(.characterStateLoaded(updatedCharacter))
                 }
 

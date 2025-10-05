@@ -30,7 +30,7 @@ struct CharacterPreviewReducer {
             switch action {
             case .onAppear:
                 return .run { [state] send in
-                    let character = try await databaseClient.fetchCharacterState(for: state.character)
+                    let character = try await databaseClient.fetchCharacterState(state.character)
                     await send(.characterStateLoaded(character))
                 }
 

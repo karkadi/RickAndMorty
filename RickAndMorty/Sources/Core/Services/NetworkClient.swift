@@ -8,31 +8,44 @@ import ComposableArchitecture
 import Foundation
 
 // MARK: - Protocol
-protocol NetworkClientProtocol {
-    func fetchCharacters(from urlString: String)async throws -> RickAndMortyDTO
+struct NetworkClient: Sendable {
+    var fetchCharacters: @Sendable (_ urlString: String)async throws -> RickAndMortyDTO
 }
 
 // MARK: - Live Implementation
-class NetworkClient: NetworkClientProtocol {
-    func fetchCharacters(from urlString: String) async throws -> RickAndMortyDTO {
-        guard let url = URL(string: urlString) else {
-            throw NetworkError.invalidURL
-        }
-
-        let (data, response) = try await URLSession.shared.data(from: url)
-
-        guard let httpResponse = response as? HTTPURLResponse,
-              (200...299).contains(httpResponse.statusCode) else {
-            throw NetworkError.invalidResponse
-        }
-
-        do {
-            let decoder = JSONDecoder()
-            return try decoder.decode(RickAndMortyDTO.self, from: data)
-        } catch {
-            throw error
-        }
-    }
+extension NetworkClient: DependencyKey {
+    static let liveValue: NetworkClient = {
+        return NetworkClient(
+            fetchCharacters: { urlString in
+                guard let url = URL(string: urlString) else {
+                    throw NetworkError.invalidURL
+                }
+                
+                let (data, response) = try await URLSession.shared.data(from: url)
+                
+                guard let httpResponse = response as? HTTPURLResponse,
+                      (200...299).contains(httpResponse.statusCode) else {
+                    throw NetworkError.invalidResponse
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    return try decoder.decode(RickAndMortyDTO.self, from: data)
+                } catch {
+                    throw error
+                }
+            }
+        )
+    }()
+    
+    static let testValue: NetworkClient = {
+        return NetworkClient(
+            fetchCharacters: { _ in
+                MockRickAndMortyService.mockedCharacters!
+            }
+                )
+            }()
+    static let previewValue: NetworkClient = testValue
 }
 
 // Custom error enum for better error handling
@@ -42,23 +55,16 @@ enum NetworkError: Error {
     case noData
 }
 
-// MARK: - Dependency Keys
-enum NetworkServiceKey: DependencyKey {
-    static let liveValue: any NetworkClientProtocol = NetworkClient()
-    static let testValue: any NetworkClientProtocol = MockRickAndMortyService()
-    static let previewValue: any NetworkClientProtocol = MockRickAndMortyService()
-}
-
 // MARK: - Dependency Registration
 extension DependencyValues {
-    var networkClient: any NetworkClientProtocol {
-        get { self[NetworkServiceKey.self] }
-        set { self[NetworkServiceKey.self] = newValue }
+    var networkClient: NetworkClient {
+        get { self[NetworkClient.self] }
+        set { self[NetworkClient.self] = newValue }
     }
 }
 
 // MARK: - Mock
-class MockRickAndMortyService: NetworkClientProtocol {
+class MockRickAndMortyService {
     func fetchCharacters(from _: String) async throws -> RickAndMortyDTO { Self.mockedCharacters! }
 
     static var mockedCharacters: RickAndMortyDTO? {
