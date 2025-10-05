@@ -11,7 +11,8 @@ import SwiftUI
 
 struct CharacterDetailsView: View {
     let store: StoreOf<CharacterDetailsReducer>
-
+    @State private var toggleLike = false
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .center, spacing: 8) {
@@ -39,25 +40,19 @@ struct CharacterDetailsView: View {
                 .transaction { transaction in
                     transaction.animation = .spring(response: 0.5, dampingFraction: 0.65, blendDuration: 0.025)
                 }
+                .simultaneousGesture(
+                    TapGesture(count: 2)
+                        .onEnded { handleDoubleTap() }
+                )
                 HStack {
-                    Spacer()
-
-                    Button {
+                    LikeView(isLiked: store.character.isLiked, toggleLike: $toggleLike) {
                         store.send(.toggleLike)
-                    } label: {
-                        Label {
-                            Text("Like")
-                        } icon: {
-                            Image(systemName: store.character.isLiked ? "heart.fill" : "heart")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 40, height: 40)
-                                .foregroundStyle(.red)
-                        }
-                        .labelStyle(.iconOnly)
                     }
                     .padding(.horizontal)
+                    
+                    Spacer()
                 }
+                .frame(height: 40)
                 centeredText(title: "Status : ", text: store.character.status)
                 centeredText(title: "Species : ", text: store.character.species)
                 centeredText(title: "Type : ", text: store.character.type)
@@ -72,7 +67,7 @@ struct CharacterDetailsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(store.character.name)
     }
-
+    
     private func centeredText(title: String, text: String) -> some View {
         HStack(alignment: .center, spacing: 0.0 ) {
             Text(title)
@@ -83,6 +78,9 @@ struct CharacterDetailsView: View {
                 .foregroundColor(.textGreyColor)
         }
     }
+    private func handleDoubleTap() {
+        toggleLike.toggle()
+    }
 }
 
 struct PurpleTextColorLabelStyle: LabelStyle {
@@ -92,7 +90,7 @@ struct PurpleTextColorLabelStyle: LabelStyle {
                 configuration.title
             },
             icon: { configuration.icon
-                .foregroundColor(.red)
+                    .foregroundColor(.red)
             }
         )
     }

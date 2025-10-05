@@ -85,7 +85,7 @@ struct CharactersGridReducer {
                 state.isLoadingMore = true
                 return .run { [info = state.info] send in
                     do {
-                        let rickAndMortyData = try await charactersGridClient.fetchMoreCharacters(from: info)
+                        let rickAndMortyData = try await charactersGridClient.fetchMoreCharacters(info)
                         await send(.moreStoriesLoaded(.success(rickAndMortyData)))
                     } catch {
                         await send(.moreStoriesLoaded(.failure(error)))

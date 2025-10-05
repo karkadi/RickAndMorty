@@ -48,6 +48,7 @@ struct MetalView: UIViewRepresentable {
         Coordinator(renderingUseCase: renderingClient)
     }
 
+    @MainActor
     class Coordinator {
         private let renderingUseCase: any MetalRenderingClient
 

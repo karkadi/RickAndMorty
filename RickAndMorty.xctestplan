@@ -1,0 +1,47 @@
+{
+  "configurations" : [
+    {
+      "id" : "24BC46FB-9BAD-4B31-A389-12AAA8D49B15",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:RickAndMorty.xcodeproj",
+          "identifier" : "5B05A2F72DA29F1C00BD1A92",
+          "name" : "RickAndMorty"
+        }
+      ]
+    },
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:RickAndMorty.xcodeproj",
+      "identifier" : "5B05A2F72DA29F1C00BD1A92",
+      "name" : "RickAndMorty"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:RickAndMorty.xcodeproj",
+        "identifier" : "5B05A3062DA29F1D00BD1A92",
+        "name" : "RickAndMortyTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:RickAndMorty.xcodeproj",
+        "identifier" : "5B05A3102DA29F1D00BD1A92",
+        "name" : "RickAndMortyUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

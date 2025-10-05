@@ -19,10 +19,6 @@ struct ResultModelEntity: Equatable, Identifiable {
     let created: String
     var isSeen: Bool = false
     var isLiked: Bool = false
-
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.id == rhs.id
-    }
 }
 
 extension ResultModelEntity {
@@ -38,12 +34,12 @@ extension ResultModelDTO {
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-
+        
         // Convert string to Date, using current date as fallback
         let createdDate = dateFormatter.date(from: created) ?? Date()
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = "dd/MM/yyyy"
-
+        
         return ResultModelEntity(id: id,
                                  name: name,
                                  status: status,

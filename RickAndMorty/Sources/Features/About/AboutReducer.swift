@@ -11,18 +11,18 @@ import ComposableArchitecture
 struct AboutReducer {
     // MARK: - Dependencies
     @Dependency(\.aboutClient) private var aboutClient
-
+    
     // MARK: - State
     @ObservableState
     struct State: Equatable {
-        var aboutInfo = AboutInfoModel(appName: "", creator: "", creationDate: "")
+        var aboutInfo: AboutInfoModel?
     }
-
+    
     // MARK: - Actions
     enum Action {
         case onAppear
     }
-
+    
     // MARK: - Reducer
     var body: some Reducer<State, Action> {
         Reduce { state, action in
