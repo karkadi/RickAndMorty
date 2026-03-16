@@ -5,7 +5,7 @@
 //  Created by Arkadiy KAZAZYAN on 06/04/2025.
 //
 
-import CachedAsyncImage
+import Kingfisher
 import ComposableArchitecture
 import SwiftUI
 
@@ -17,33 +17,30 @@ struct CharacterDetailsView: View {
         ScrollView {
             VStack(alignment: .center, spacing: 8) {
                 Spacer()
-                CachedAsyncImage(url: store.character.image,
-                                 placeholder: { progress in
-                    ZStack {
-                        Color.background
-                        ProgressView {
-                            VStack {
+                KFImage(URL(string: store.character.image))
+                    .placeholder {
+                        ZStack {
+                            Color.background
+                            ProgressView {
                                 Text("Loading...")
-                                Text("\(progress) %")
                             }
                         }
                     }
-                },
-                                 image: {
-                    Image(uiImage: $0)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .transition(.scale)
-                })
-                .frame(width: 300, height: 300)
-                .clipShape(RoundedRectangle(cornerRadius: 10.0 ))
-                .transaction { transaction in
-                    transaction.animation = .spring(response: 0.5, dampingFraction: 0.65, blendDuration: 0.025)
-                }
-                .simultaneousGesture(
-                    TapGesture(count: 2)
-                        .onEnded { handleDoubleTap() }
-                )
+                    .loadTransition(.scale,
+                                    animation: .spring(response: 0.5, dampingFraction: 0.65, blendDuration: 0.025))
+                  //  .fade(duration: 0.25)
+                //    .resizable()
+                  //  .aspectRatio(contentMode: .fill)
+                    .frame(width: 300, height: 300)
+                    .clipShape(RoundedRectangle(cornerRadius: 10.0))
+             
+//                    .transaction { transaction in
+//                        transaction.animation = .spring(response: 0.5, dampingFraction: 0.65, blendDuration: 0.025)
+//                    }
+                    .simultaneousGesture(
+                        TapGesture(count: 2)
+                            .onEnded { handleDoubleTap() }
+                    )
                 HStack {
                     LikeView(isLiked: store.character.isLiked, toggleLike: $toggleLike) {
                         store.send(.toggleLike)

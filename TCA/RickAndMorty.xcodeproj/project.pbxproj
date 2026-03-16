@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5B05A34C2DA2A6DE00BD1A92 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5B05A34B2DA2A6DE00BD1A92 /* ComposableArchitecture */; };
-		5B3B568E2DA4464C00CB0185 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 5B3B568D2DA4464C00CB0185 /* CachedAsyncImage */; };
 		5BE5D1E72E7DCF8D008A546B /* SQLiteData in Frameworks */ = {isa = PBXBuildFile; productRef = 5BE5D1E62E7DCF8D008A546B /* SQLiteData */; };
+		5BEDE60E2F59865000302203 /* DebugSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5BEDE60D2F59865000302203 /* DebugSwift */; };
+		5BEDE8FE2F59E8DF00302203 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 5BEDE8FD2F59E8DF00302203 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,9 +84,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BEDE8FE2F59E8DF00302203 /* Kingfisher in Frameworks */,
 				5BE5D1E72E7DCF8D008A546B /* SQLiteData in Frameworks */,
 				5B05A34C2DA2A6DE00BD1A92 /* ComposableArchitecture in Frameworks */,
-				5B3B568E2DA4464C00CB0185 /* CachedAsyncImage in Frameworks */,
+				5BEDE60E2F59865000302203 /* DebugSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,8 +150,9 @@
 			name = RickAndMorty;
 			packageProductDependencies = (
 				5B05A34B2DA2A6DE00BD1A92 /* ComposableArchitecture */,
-				5B3B568D2DA4464C00CB0185 /* CachedAsyncImage */,
 				5BE5D1E62E7DCF8D008A546B /* SQLiteData */,
+				5BEDE60D2F59865000302203 /* DebugSwift */,
+				5BEDE8FD2F59E8DF00302203 /* Kingfisher */,
 			);
 			productName = RickAndMorty;
 			productReference = 5B05A2F82DA29F1C00BD1A92 /* RickAndMorty.app */;
@@ -229,8 +232,9 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				5B05A34A2DA2A6DE00BD1A92 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				5B3B568C2DA4464C00CB0185 /* XCRemoteSwiftPackageReference "CachedAsyncImage" */,
 				5BE5D1E52E7DCF8D008A546B /* XCRemoteSwiftPackageReference "sqlite-data" */,
+				5BEDE60C2F59865000302203 /* XCRemoteSwiftPackageReference "DebugSwift" */,
+				5BEDE8FC2F59E8DF00302203 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5B05A2F92DA29F1C00BD1A92 /* Products */;
@@ -644,20 +648,30 @@
 				minimumVersion = 1.19.0;
 			};
 		};
-		5B3B568C2DA4464C00CB0185 /* XCRemoteSwiftPackageReference "CachedAsyncImage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/bullinnyc/CachedAsyncImage";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.6.0;
-			};
-		};
 		5BE5D1E52E7DCF8D008A546B /* XCRemoteSwiftPackageReference "sqlite-data" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/sqlite-data";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
+			};
+			traits = (
+			);
+		};
+		5BEDE60C2F59865000302203 /* XCRemoteSwiftPackageReference "DebugSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/karkadi/DebugSwift";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		5BEDE8FC2F59E8DF00302203 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.8.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -668,15 +682,20 @@
 			package = 5B05A34A2DA2A6DE00BD1A92 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
 		};
-		5B3B568D2DA4464C00CB0185 /* CachedAsyncImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5B3B568C2DA4464C00CB0185 /* XCRemoteSwiftPackageReference "CachedAsyncImage" */;
-			productName = CachedAsyncImage;
-		};
 		5BE5D1E62E7DCF8D008A546B /* SQLiteData */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5BE5D1E52E7DCF8D008A546B /* XCRemoteSwiftPackageReference "sqlite-data" */;
 			productName = SQLiteData;
+		};
+		5BEDE60D2F59865000302203 /* DebugSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5BEDE60C2F59865000302203 /* XCRemoteSwiftPackageReference "DebugSwift" */;
+			productName = DebugSwift;
+		};
+		5BEDE8FD2F59E8DF00302203 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5BEDE8FC2F59E8DF00302203 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,0 +1,2 @@
+/Users/arkadiy_m2/Documents/Deverlopment/RickAndMorty/RickAndMorty/Sources/Core/Services/ImagePrefetcherClient.swift:109:38: warning: Unused Closure Parameter Violation: Unused parameter in a closure should be replaced with _ (unused_closure_parameter)
+/Users/arkadiy_m2/Documents/Deverlopment/RickAndMorty/RickAndMorty/Sources/Core/Services/ImagePrefetcherClient.swift:109:55: warning: Unused Closure Parameter Violation: Unused parameter in a closure should be replaced with _ (unused_closure_parameter)

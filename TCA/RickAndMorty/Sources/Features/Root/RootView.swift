@@ -19,13 +19,13 @@ struct RootView: View {
         } destination: { store in
             switch store.state {
             case .aboutView:
-                IfLetStore(store.scope(state: \.aboutView, action: \.aboutView)) {
-                    AboutView(store: $0)
+                if let store = store.scope(state: \.aboutView, action: \.aboutView) {
+                    AboutView(store: store)
                 }
 
             case .storyDetails:
-                IfLetStore(store.scope(state: \.storyDetails, action: \.storyDetails) ) {
-                    CharacterDetailsView(store: $0)
+                if let store = store.scope(state: \.storyDetails, action: \.storyDetails) {
+                    CharacterDetailsView(store: store)
                 }
             }
         }
