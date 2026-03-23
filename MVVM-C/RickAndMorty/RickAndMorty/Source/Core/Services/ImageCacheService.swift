@@ -123,8 +123,9 @@ final class ImageCacheService: ImageCacheServiceProtocol {
     func prefetchImages(urls: [String]) async {
         await withTaskGroup(of: Void.self) { group in
             for url in urls.prefix(20) {
-                group.addTask { @MainActor in
-                    _ = await self.image(for: url)
+                group.addTask { [weak self] in
+                    // Since we're in a @MainActor class, this closure is already on MainActor
+                    _ = await self?.image(for: url)
                 }
             }
         }

@@ -11,6 +11,8 @@
 		5B31F8A32F62EB3200164AAD /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B31F8A22F62EB3200164AAD /* Metal.framework */; };
 		5B31F8A52F62EB3C00164AAD /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B31F8A42F62EB3C00164AAD /* MetalKit.framework */; };
 		5B31F8A82F63537C00164AAD /* DIContainer in Frameworks */ = {isa = PBXBuildFile; productRef = 5B31F8A72F63537C00164AAD /* DIContainer */; };
+		5B3B8A902F71671800DB7766 /* SnapshotMacros in Frameworks */ = {isa = PBXBuildFile; productRef = 5B3B8A8F2F71671800DB7766 /* SnapshotMacros */; };
+		5B3B8A922F71671800DB7766 /* SnapshotMacrosClient in Frameworks */ = {isa = PBXBuildFile; productRef = 5B3B8A912F71671800DB7766 /* SnapshotMacrosClient */; };
 		5BEDE9862F5AEDD000302203 /* DebugSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5BEDE9852F5AEDD000302203 /* DebugSwift */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +77,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B3B8A922F71671800DB7766 /* SnapshotMacrosClient in Frameworks */,
+				5B3B8A902F71671800DB7766 /* SnapshotMacros in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +170,8 @@
 			);
 			name = RickAndMortyTests;
 			packageProductDependencies = (
+				5B3B8A8F2F71671800DB7766 /* SnapshotMacros */,
+				5B3B8A912F71671800DB7766 /* SnapshotMacrosClient */,
 			);
 			productName = RickAndMortyTests;
 			productReference = 5BEDE9192F5AE03100302203 /* RickAndMortyTests.xctest */;
@@ -230,6 +236,7 @@
 				5BEDE9842F5AEDD000302203 /* XCRemoteSwiftPackageReference "DebugSwift" */,
 				5B31F89E2F62E7AA00164AAD /* XCLocalSwiftPackageReference "Packages/MetalKitUI" */,
 				5B31F8A62F63537C00164AAD /* XCLocalSwiftPackageReference "Packages/DIContainer" */,
+				5B3B8A8E2F71671800DB7766 /* XCLocalSwiftPackageReference "Packages/SnapshotMacros" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5BEDE90B2F5AE03000302203 /* Products */;
@@ -386,6 +393,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -440,6 +448,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
@@ -484,7 +493,7 @@
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				XROS_DEPLOYMENT_TARGET = 26.4;
 			};
@@ -531,7 +540,7 @@
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				XROS_DEPLOYMENT_TARGET = 26.4;
 			};
@@ -556,7 +565,7 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RickAndMorty.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RickAndMorty";
 				XROS_DEPLOYMENT_TARGET = 26.4;
@@ -582,7 +591,7 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RickAndMorty.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RickAndMorty";
 				XROS_DEPLOYMENT_TARGET = 26.4;
@@ -607,7 +616,7 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				TEST_TARGET_NAME = RickAndMorty;
 				XROS_DEPLOYMENT_TARGET = 26.4;
@@ -632,7 +641,7 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				TEST_TARGET_NAME = RickAndMorty;
 				XROS_DEPLOYMENT_TARGET = 26.4;
@@ -689,6 +698,10 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/DIContainer;
 		};
+		5B3B8A8E2F71671800DB7766 /* XCLocalSwiftPackageReference "Packages/SnapshotMacros" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/SnapshotMacros;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -710,6 +723,14 @@
 		5B31F8A72F63537C00164AAD /* DIContainer */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DIContainer;
+		};
+		5B3B8A8F2F71671800DB7766 /* SnapshotMacros */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SnapshotMacros;
+		};
+		5B3B8A912F71671800DB7766 /* SnapshotMacrosClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SnapshotMacrosClient;
 		};
 		5BEDE9852F5AEDD000302203 /* DebugSwift */ = {
 			isa = XCSwiftPackageProductDependency;

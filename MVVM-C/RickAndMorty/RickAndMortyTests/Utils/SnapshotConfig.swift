@@ -8,16 +8,17 @@
 import UIKit
 import SwiftUI
 import Testing
+import SnapshotMacros
 
 // MARK: - Configuration
 
 public enum SnapshotConfig {
 
     /// When true snapshots are recorded instead of validated
-    public static var recordMode = true
+    public static let recordMode = false
 
     /// Allowed pixel difference (0–1)
-    public static var tolerance: Float = 0.05
+    public static let tolerance: Float = 0.05
 }
 
 // MARK: - Device Presets
@@ -258,8 +259,11 @@ private func generateDiff(lhs: UIImage, rhs: UIImage, name: String) throws {
     }
     
     try saveSnapshot(image: diff, name: "\(name)_diff")
+    #attach(diff, named: "\(name)_diff")
     try saveSnapshot(image: lhs, name: "\(name)_actual")
+    #attach(lhs, named: "\(name)_actual")
     try saveSnapshot(image: rhs, name: "\(name)_expected")
+    #attach(rhs, named: "\(name)_expected")
 }
 
 // MARK: - Save Snapshot

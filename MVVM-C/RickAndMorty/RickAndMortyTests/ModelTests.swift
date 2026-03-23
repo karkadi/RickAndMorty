@@ -8,6 +8,7 @@ import Testing
 @testable import RickAndMorty
 
 // MARK: - Model Tests
+@MainActor
 struct ModelTests {
     
     @Test("Character initialization works correctly")
