@@ -47,6 +47,7 @@ struct CharacterDetailsView: View {
                             }
                         }
                     )
+                    
                     Spacer()
                 }
                 .padding(.horizontal)
@@ -54,6 +55,7 @@ struct CharacterDetailsView: View {
                 
                 // Character Details
                 detailsSection
+                   
             }
             .padding(.vertical)
         }
@@ -76,6 +78,7 @@ struct CharacterDetailsView: View {
         .padding()
         .background(Color.gray.opacity(0.1))
         .cornerRadius(12)
+        .glassEffect(in: .rect(cornerRadius: 12))
         .padding(.horizontal)
     }
     

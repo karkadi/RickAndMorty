@@ -8,6 +8,7 @@
 // MARK: - Database Service
 import SwiftData
 import Foundation
+import DIContainer
 
 // MARK: - Protocol Definition
 protocol DatabaseServiceProtocol: Sendable {
@@ -179,5 +180,16 @@ final class DatabaseService: DatabaseServiceProtocol {
         )
         
         return try modelContext.fetch(descriptor)
+    }
+}
+
+enum DatabaseServiceKey: DependencyKey {
+    static let liveValue: DatabaseServiceProtocol = DatabaseService.shared
+}
+
+extension DependencyValues {
+    var databaseService: DatabaseServiceProtocol {
+        get { self[DatabaseServiceKey.self] }
+        set { self[DatabaseServiceKey.self] = newValue }
     }
 }

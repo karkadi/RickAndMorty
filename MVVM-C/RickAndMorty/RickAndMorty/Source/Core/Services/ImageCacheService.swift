@@ -8,6 +8,7 @@
 // MARK: - Image Cache Service
 import SwiftUI
 import SwiftData
+import DIContainer
 
 protocol ImageCacheServiceProtocol: Sendable {
     func image(for url: String) async -> UIImage?
@@ -133,5 +134,16 @@ final class ImageCacheService: ImageCacheServiceProtocol {
     
     func clearMemoryCache() {
         memoryCache.removeAllObjects()
+    }
+}
+
+enum ImageCacheServiceKey: DependencyKey {
+    static let liveValue: ImageCacheServiceProtocol = ImageCacheService.shared
+}
+
+extension DependencyValues {
+    var imageCacheService: ImageCacheServiceProtocol {
+        get { self[ImageCacheServiceKey.self] }
+        set { self[ImageCacheServiceKey.self] = newValue }
     }
 }

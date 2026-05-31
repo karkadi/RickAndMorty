@@ -12,22 +12,19 @@ import DIContainer
 @MainActor
 final class CharactersGridViewModelTests {
     
-    let testContainer = DIContainer()
     let mockService = MockNetworkService()
-    
-    init() async throws {
-        //  Register the Mock
-        testContainer.register(NetworkServiceProtocol.self) {
-            self.mockService
-        }
-        testContainer.register(DatabaseServiceProtocol.self) { MockDatabaseService() }
 
-        testContainer.register(ImageCacheServiceProtocol.self) { ImageCacheService.shared }
-        
-        // Inject it as the 'current' environment
-        DIContainer.shared = testContainer
+    @MainActor
+    init() async throws {
+        DependencyOverrideStore.shared.override(\.databaseService, with: MockDatabaseService())
+        DependencyOverrideStore.shared.override(\.imageCacheService, with: MockImageCacheService())
+        DependencyOverrideStore.shared.override(\.networkService, with: mockService)
     }
     
+    deinit {
+        Task { @MainActor in DependencyOverrideStore.shared.reset() }
+    }
+        
     @Test("CharactersGridViewModel initial state is correct")
     func testInitialState() {
         let viewModel = CharactersGridViewModel()

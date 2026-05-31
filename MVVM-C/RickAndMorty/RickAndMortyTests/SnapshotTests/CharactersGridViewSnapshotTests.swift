@@ -14,17 +14,17 @@ import SwiftUI
 @MainActor
 final class CharactersGridViewSnapshotTests {
     
-    let testContainer = DIContainer()
     let mockService = MockNetworkService()
     
+    @MainActor
     init() async throws {
-        //  Register the Mock
-        testContainer.register(NetworkServiceProtocol.self) { self.mockService }
-        testContainer.register(DatabaseServiceProtocol.self) { MockDatabaseService() }
-        testContainer.register(ImageCacheServiceProtocol.self) { MockImageCacheService() }
-        
-        // Inject it as the 'current' environment
-        DIContainer.shared = testContainer
+        DependencyOverrideStore.shared.override(\.databaseService, with: MockDatabaseService())
+        DependencyOverrideStore.shared.override(\.imageCacheService, with: MockImageCacheService())
+        DependencyOverrideStore.shared.override(\.networkService, with: mockService)
+    }
+    
+    deinit {
+        Task { @MainActor in DependencyOverrideStore.shared.reset() }
     }
     
     @Test

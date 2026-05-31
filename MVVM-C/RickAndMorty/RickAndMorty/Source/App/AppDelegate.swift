@@ -17,8 +17,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         
-        registerSevices()
-        
         // Remove comment below to remove specific features and comment DebugSwift.setup() not to double trigger.
         // DebugSwift.setup(hideFeatures: [.interface, .app, .resources, .performance])
         
@@ -36,13 +34,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
 #endif
         return true
-    }
-    
-    // Register Services
-    private func registerSevices() {
-        DIContainer.shared.register(DatabaseServiceProtocol.self) { DatabaseService.shared }
-        DIContainer.shared.register(NetworkServiceProtocol.self) { NetworkService.shared }
-        DIContainer.shared.register(ImageCacheServiceProtocol.self) { ImageCacheService.shared }
     }
     
     private func getTopViewController(from viewController: UIViewController?) -> UIViewController? {

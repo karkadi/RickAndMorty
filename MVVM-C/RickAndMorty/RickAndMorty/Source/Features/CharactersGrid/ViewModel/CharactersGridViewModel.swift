@@ -15,11 +15,11 @@ import DIContainer
 @Observable
 final class CharactersGridViewModel {
     @ObservationIgnored
-    @Injected private var networkService: NetworkServiceProtocol
+    @Injected(\.networkService) var networkService
     @ObservationIgnored
-    @Injected private var databaseService: DatabaseServiceProtocol
+    @Injected(\.databaseService) var databaseService
     @ObservationIgnored
-    @Injected private var imageCache: ImageCacheServiceProtocol
+    @Injected(\.imageCacheService) var imageCache
     
     var characters: [Character] = []
     var isLoading = false

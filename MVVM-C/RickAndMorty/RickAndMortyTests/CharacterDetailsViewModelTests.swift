@@ -12,16 +12,17 @@ import DIContainer
 
 @MainActor
 final class CharacterDetailsViewModelTests {
-    let testContainer = DIContainer()
+
     let mockDB = MockDatabaseService()
     
+    @MainActor
     init() async throws {
-        //  Register the Mock
-        testContainer.register(DatabaseServiceProtocol.self) { self.mockDB }
-        testContainer.register(ImageCacheServiceProtocol.self) { MockImageCacheService() }
-        
-        // Inject it as the 'current' environment
-        DIContainer.shared = testContainer
+        DependencyOverrideStore.shared.override(\.databaseService, with: self.mockDB)
+        DependencyOverrideStore.shared.override(\.imageCacheService, with: MockImageCacheService())
+    }
+    
+    deinit {
+        Task { @MainActor in DependencyOverrideStore.shared.reset() }
     }
     
     @Test("CharacterDetailsViewModel initializes correctly")

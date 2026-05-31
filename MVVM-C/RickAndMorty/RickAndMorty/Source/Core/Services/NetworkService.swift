@@ -7,6 +7,7 @@
 
 // MARK: - Network Service
 import Foundation
+import DIContainer
 
 // MARK: - Protocol Definition
 protocol NetworkServiceProtocol: Sendable {
@@ -14,21 +15,15 @@ protocol NetworkServiceProtocol: Sendable {
     func fetchMoreCharacters(urlString: String) async throws -> APIResponse
 }
 
-// Make NetworkService non-isolated or use a dedicated actor for network calls
+// MARK: - Network Service
 final class NetworkService: Sendable, NetworkServiceProtocol {
     static let shared = NetworkService()
-    private let baseURL = "https://rickandmortyapi.com/api"
     private let session = URLSession.shared
     
     private init() {}
     
-    func fetchCharacters(page: Int = 1) async throws -> APIResponse {
-        let urlString = "\(baseURL)/character?page=\(page)"
-        guard let url = URL(string: urlString) else {
-            throw NetworkError.invalidURL
-        }
-        
-        let (data, response) = try await session.data(from: url)
+    private func performRequest<T: Decodable>(_ request: URLRequest) async throws -> T {
+        let (data, response) = try await session.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse,
               (200...299).contains(httpResponse.statusCode) else {
@@ -36,33 +31,33 @@ final class NetworkService: Sendable, NetworkServiceProtocol {
         }
         
         do {
-            // Use a dedicated decoder with a custom decoding strategy if needed
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
-            return try decoder.decode(APIResponse.self, from: data)
+            return try decoder.decode(T.self, from: data)
         } catch {
+            print("Decoding error: \(error)")
             throw NetworkError.decodingError
         }
     }
     
+    func fetchCharacters(page: Int = 1) async throws -> APIResponse {
+        let request = APIEndpoint.characters(page: page).urlRequest
+        return try await performRequest(request)
+    }
+    
     func fetchMoreCharacters(urlString: String) async throws -> APIResponse {
-        guard let url = URL(string: urlString) else {
-            throw NetworkError.invalidURL
-        }
-        
-        let (data, response) = try await session.data(from: url)
-        
-        guard let httpResponse = response as? HTTPURLResponse,
-              (200...299).contains(httpResponse.statusCode) else {
-            throw NetworkError.invalidResponse
-        }
-        
-        do {
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .iso8601
-            return try decoder.decode(APIResponse.self, from: data)
-        } catch {
-            throw NetworkError.decodingError
-        }
+        let request = APIEndpoint.nextPage(urlString: urlString).urlRequest
+        return try await performRequest(request)
+    }
+}
+
+enum NetworkServiceKey: DependencyKey {
+    static let liveValue: NetworkServiceProtocol = NetworkService.shared
+}
+
+extension DependencyValues {
+    var networkService: NetworkServiceProtocol {
+        get { self[NetworkServiceKey.self] }
+        set { self[NetworkServiceKey.self] = newValue }
     }
 }

@@ -13,9 +13,9 @@ import DIContainer
 @Observable
 final class CharacterDetailsViewModel {
     @ObservationIgnored
-    @Injected private var databaseService: DatabaseServiceProtocol
+    @Injected(\.databaseService) var databaseService
     @ObservationIgnored
-    @Injected private var imageCache: ImageCacheServiceProtocol
+    @Injected(\.imageCacheService) var imageCache
     
     var character: Character
     var toggleLike = false
